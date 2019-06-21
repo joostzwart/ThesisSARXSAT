@@ -8,11 +8,13 @@ author: Joost Zwart
 ## Linux
 
 Run the following command to install:
- > sudo python3 setup.py install
+>sudo python3 setup.py install
+
 Run the following command to use the GUI:
- > python3 gui.py
+>python3 gui.py
+
 Run the following command after adding new code:
-> python3 setup.py build_ext --inplace
+>python3 setup.py build_ext --inplace
 
 
 ## Windows and Mac
