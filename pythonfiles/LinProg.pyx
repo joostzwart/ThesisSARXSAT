@@ -41,8 +41,8 @@ cpdef populatebyrow(np.ndarray[FTYPE_t, ndim=2] output, np.ndarray[FTYPE_t, ndim
     cdef list output_list=output.tolist()
     cdef int size=(len(output_list[0]))*2*outputs
     cdef int s=len(output_list[0])
-    cdef int l=(ny*outputs+nu*inputs)
-    cdef int L=((ny*outputs+nu*inputs)*outputs)
+    cdef int l=len(regressor[0])
+    cdef int L=len(regressor[0])*outputs
     cdef list my_obj = [0.0]*L
     cdef list my_ub = [3.0]*L
     cdef list my_lb = [-3.0]*L
@@ -60,7 +60,7 @@ cpdef populatebyrow(np.ndarray[FTYPE_t, ndim=2] output, np.ndarray[FTYPE_t, ndim
 
     ## Creating left side of constraints
     cdef np.ndarray R=np.zeros((size,L),dtype=FTYPE)
-    for i in range(outputs):   
+    for i in range(outputs):
         R[i*s:(i+1)*s,i*l:(i+1)*l]=-regressor
         R[(i+outputs)*s:(i+outputs+1)*s,i*l:(i+1)*l]=regressor
     cdef list cons = R.tolist()
@@ -69,7 +69,6 @@ cpdef populatebyrow(np.ndarray[FTYPE_t, ndim=2] output, np.ndarray[FTYPE_t, ndim
     if slack:
         R=np.hstack((R,np.tile(-np.identity(s),(2*outputs,1))))
         cons=R.tolist()
-
 
     ## Adding names to the constraints (rows)
     cdef list rows=[]

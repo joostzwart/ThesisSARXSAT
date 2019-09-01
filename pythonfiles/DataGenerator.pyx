@@ -20,6 +20,7 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
         thetaR {array} -- Parametervector of the system
         n{list} --   Switching sequence
     """
+
     if seed != 0:
         random.seed(seed)
         np.random.seed(seed)
@@ -27,18 +28,28 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
         random.seed(random.randint(1,100000))
         np.random.seed(random.randint(1,100000))
 
-    ## Generate random stable discrete systems
-    cdef np.ndarray thetaY=(2/ny*outputs)*(np.random.rand(modes,outputs,ny*outputs)-0.5)
-    cdef np.ndarray thetaU=2*np.random.rand(modes,outputs,nu*inputs)-1
-    cdef np.ndarray thetaR=0.5*np.dstack((thetaY,thetaU))
+    ## generate the parameter vectors
+    cdef np.ndarray thetaY=(2.0/ny*outputs)*(np.random.rand(modes,outputs,ny*outputs)-0.5)
+    cdef np.ndarray thetaU=0.5*np.random.rand(modes,outputs,nu*inputs)-1
+    cdef np.ndarray thetaR
+    cdef np.ndarray thetaAffine = np.random.rand(modes, outputs, 1)
     cdef list u = []
-    H={}
     cdef int m=0
     cdef int i
-    cdef np.ndarray Temp, Temp2
+    cdef np.ndarray newmode, oldmodes
+
+    ## generate the regressor vector
+    if pwarx==1:
+        thetaR = 0.5*np.dstack((thetaY,thetaU,thetaAffine))
+    else:
+        thetaR = 0.5*np.dstack((thetaY,thetaU))
+    H={}
     ## Generating uniformly distributed random input
     for i in range(inputs):
-        [u_i] = 10*(2 * np.random.rand(1, T) - 1)
+        [u_i] = (5 * np.random.rand(1, T) - 2.5)
+        #[u_i] = np.random.normal(0,0.4,(1,T))
+        time=np.arange(0, T, 1)
+        u_i=np.sin(0.1*time)
         u.append(u_i)
 
     ## Generating uniformly distributed random y0
@@ -61,14 +72,14 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
     if pwarx==1:
         n=[modes+1 for x in n]
         for i in range(modes-1):
-            Temp = 10*np.random.rand(1, nu * inputs + ny * outputs+1)-5
+            newmode = 10*np.random.rand(1, nu * inputs + ny * outputs+1)-5
             if i > 0:
-                H[i] = np.vstack((Temp, -Temp2))
-                Temp2 = np.vstack((Temp, H[i - 1]))
+                H[i] = np.vstack((newmode, oldmodes))
+                oldmodes = np.vstack((oldmodes, -newmode))
             else:
-                H[i] = Temp
-                Temp2 = Temp
-        H[i+1]=-Temp2
+                H[i] = newmode
+                oldmodes = -newmode
+        H[modes-1]=oldmodes
     for i in range(max(ny,nu),T):
         ## Obtain the input and output values used to calculate the next time step
         ux = np.hstack(tuple([u[a][i - nu:i] for a in range(inputs)]))
@@ -78,9 +89,8 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
         if pwarx==1:
             for j in range(modes):
                 er=np.dot(H[j], np.append(np.append(uy, ux), 1))
-                print("err",er)
                 if (er<0).all():
-                    y[:, i] = np.dot(thetaR[j], np.append(uy, ux)) + float(nt * (np.random.rand(1) - 0.5))
+                    y[:, i] = np.dot(thetaR[j], np.append(uy, np.append(ux,1))) + float(nt * (np.random.rand(1) - 0.5))
                     n[i]=j+1
         else:
             y[:, i] = np.dot(thetaR[n[i] - 1], np.append(uy, ux)) + float(nt * (np.random.rand(1) - 0.5))
@@ -91,4 +101,4 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
     with open("Data/TestfileOutput.txt", "wb") as f:
         np.savetxt(f, y, fmt='%f9', delimiter=",")
 
-    return (thetaR,n)
+    return (thetaR,n,H)

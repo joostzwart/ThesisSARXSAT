@@ -121,13 +121,15 @@ cpdef recoverParameters(list model, int nu, int ny, int inputs, int outputs):
     return (A,B)
 
 cpdef CalculateError(list model, np.ndarray theta, list n, list switchingsequence, int ny, int nu):
-    """This function Recovers the merged switching sequence
+    """This function calculates the parameter error
 
     Arguments:
         model {list} -- List of models.
         theta {list} -- True parameters used to simulate model.
         n     {list} -- True switching sequence.
         switchingsequence {list} -- Identified switching sequence.
+        ny {int} -- Order of the output.
+        nu {int} -- Order of the input
 
     Returns:
         error {float} -- normalized error
@@ -139,8 +141,8 @@ cpdef CalculateError(list model, np.ndarray theta, list n, list switchingsequenc
     ## Creating arrays from lists for the necessary computations
     theta=np.array(theta,dtype=FTYPE).reshape(len(theta),len(model[0]))
     for i in range(len(switchingsequence)):
-        error=error+np.sum(np.abs(theta[n[i]-1,:]-model[switchingsequence[i]-1]))
-    return error/(len(n)*len(theta[0,:]))
+        error=error+np.linalg.norm(theta[n[i]-1,:]-model[switchingsequence[i]-1],2)/np.linalg.norm(theta[n[i]-1,:],2)
+    return error/len(n)
 
 cpdef CalculateDatafitError(list model, list switchingsequence, np.ndarray output, np.ndarray regressor, int outputs):
     """This function Recovers the merged switching sequence
@@ -152,11 +154,16 @@ cpdef CalculateDatafitError(list model, list switchingsequence, np.ndarray outpu
     Returns:
         error {float} -- normalized error of the datafit
     """
+
     cdef int i
     cdef double error = 0
+    cdef double normalizing
+
     for i in range(len(switchingsequence)):
-        error=error+np.linalg.norm(output[:,i] - np.kron(np.eye(outputs), regressor[i]).dot(model[switchingsequence[i]-1]), 1)
-    return error/(len(switchingsequence)*outputs)
+        error=error+np.sum(np.square(output[:,i] - np.kron(np.eye(outputs), regressor[i]).dot(model[switchingsequence[i]-1])))
+        normalizing = normalizing+np.sum(np.square(output[:,i]-np.mean(output,axis=1)))
+
+    return 100*(1-np.sqrt(error)/np.sqrt(normalizing))
 
 
 

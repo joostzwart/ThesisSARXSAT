@@ -25,6 +25,9 @@ cpdef merge_blocks(Run, int blocks):
     cdef int i, counter,
     cdef int offset=0
 
+    ## Set logger
+    logger=logging.getLogger('dev')
+
     ## Retrieve list of intervals
     Nlt=Nlt+Run[0][0].Nl
 
@@ -37,10 +40,10 @@ cpdef merge_blocks(Run, int blocks):
         modelst=modelst+Run[i][0].modelfinal
 
     ## Some information for debug purposes
-    logging.info("NL for the whole dataset = {}".format(Nlt))
-    logging.debug("Total number of models identified = {}".format(len(Nlt)))
-    logging.debug("Total models identified with duplicates still present = {}".format(modelst))
-    logging.debug("Number of models identified with duplicates still present = {}".format(len(modelst)))
+    logger.info("NL for the whole dataset = {}".format(Nlt))
+    logger.debug("Total number of models identified = {}".format(len(Nlt)))
+    logger.debug("Total models identified with duplicates still present = {}".format(modelst))
+    logger.debug("Number of models identified with duplicates still present = {}".format(len(modelst)))
 
     ## Retrieve final switchting sequence
     offset=0
@@ -49,7 +52,7 @@ cpdef merge_blocks(Run, int blocks):
         del sw[0]
         swt=swt+sw
         offset=offset+Run[i][0].switches[-1]
-    logging.info("final identified switches present at {}".format(swt))
+    logger.info("final identified switches present at {}".format(swt))
 
     ## Retrieve which model is active at which interval
     sigma2t=[0]*(max([max(a) for a in Nlt])+1)
@@ -57,15 +60,15 @@ cpdef merge_blocks(Run, int blocks):
     for counter,value in enumerate(Nlt):
         for x in value:
             sigma2t[x]=counter
-    logging.debug("sigma2t {}".format(sigma2t))
+    logger.debug("sigma2t {}".format(sigma2t))
     sigmat=sigma(swt,sigma2t)
 
     ## Remove duplicate models
     for sublist in modelst:
         if sublist not in Fmodels:
             Fmodels.append(sublist)
-    logging.debug("models without duplicates {}".format(Fmodels))
-    logging.debug("number of models left {}".format(len(Fmodels)))
+    logger.debug("models without duplicates {}".format(Fmodels))
+    logger.debug("number of models left {}".format(len(Fmodels)))
     return(Fmodels,sigmat,swt)
 
 cpdef sigma(list swt, sigma2t):
@@ -88,9 +91,9 @@ cpdef sigma(list swt, sigma2t):
         offset=value
     return(sigmat)
 
-cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarray r, int nu, int ny,
+cpdef hitting_set_model_reduction(self,Console,np.ndarray input, np.ndarray output, np.ndarray r, int nu, int ny,
                                   int inputs, int outputs, swt,list Fmodels, double delta, np.ndarray theta, list n,
-                                  int modelgeneration):
+                                  int modelgeneration,gui):
     """ 
     This function solves the minimum hitting set problem by SAT solving
     
@@ -114,6 +117,8 @@ cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarra
         sigma4 {list} -- Switching sequence    
     """
 
+    ## Set logger
+    logger=logging.getLogger('dev')
 
     ## Try to reduce number of models further by fitting models to intervals
     u2=np.split(input,swt,axis=1)
@@ -144,7 +149,7 @@ cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarra
             except:
                 print("Empty array was added.")
         Fittingmatrix.append(Ft)
-    logging.debug("Fittingmatrix {}".format(Fittingmatrix))
+    logger.debug("Fittingmatrix {}".format(Fittingmatrix))
 
     ## Hitting set problem
     cdef str satisfiability="unsat"
@@ -153,8 +158,8 @@ cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarra
         (satisfiability,min_mod)=SAT.hitting_set(Fittingmatrix,list(range(len(Fmodels))),k)
         k=k+1
 
-    logging.info("Reduced number of models = {}".format(min_mod))
-    logging.info("cardinality of models = {}".format(len(set(min_mod))))
+    logger.info("Reduced number of models = {}".format(min_mod))
+    logger.info("cardinality of models = {}".format(len(set(min_mod))))
 
     ## merge fitting datasets
     cdef list S=[]
@@ -172,7 +177,7 @@ cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarra
     cdef list r3=[]
     cdef list m3=[]
     for i in range(len(S)):
-        r3x = np.empty((0,outputs*ny+inputs*nu))
+        r3x = np.empty((0,len(r[0])))
         y3x = np.empty((outputs,0))
         for j in S[i]:
             y3x = np.hstack((y3x, y2[j]))
@@ -190,11 +195,25 @@ cpdef hitting_set_model_reduction(np.ndarray input, np.ndarray output, np.ndarra
         sigma4[i]=model_mapping.index(sigma3[i])
 
     ## Print some information about final models
-    logging.info("Switching sequence = {}".format(sigma4))
-    logging.info("Final Models: {}".format(m3))
+    logger.info("Switching sequence = {}".format(sigma4))
+    logger.info("Final Models: {}".format(m3))
     if modelgeneration==3:
         mse=models.CalculateError(m3,theta,n,[x+1 for x in sigma4],ny,nu)
-        logging.info("MSE = {}".format(mse))
+        logger.info("MSE = {}".format(mse))
     datafiterror=models.CalculateDatafitError(m3,[x+1 for x in sigma4],output,r,outputs)
-    logging.info("Data fit error = {}".format(datafiterror))
+    logger.info("Data fit error = {}".format(datafiterror))
+    if gui:
+        updateLog(self,Console)
     return(datafiterror,mse,sigma4)
+
+def updateLog(self,console):
+        if not __name__ == '__main__':
+            newtext=console.stream.getvalue()
+            newtext=newtext.splitlines()
+            if len(newtext)>0:
+                newtext=newtext[-1]
+            else:
+                newtext="---"
+            self.logLabel3.setText(self.logLabel2.text())
+            self.logLabel2.setText(self.logLabel1.text())
+            self.logLabel1.setText(newtext)

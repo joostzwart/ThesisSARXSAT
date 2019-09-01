@@ -3,9 +3,10 @@ import Sparsification as sp
 import numpy as np
 import LinProg as LP
 import logging
+import checkPoints
 
 cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, int ny, int nu,
-             int inputs, int outputs, set oldmodels, int unstuck):
+             int inputs, int outputs, set oldmodels, int unstuck, int pwarx):
     """Calling the function that runs cplex
     
     Arguments:
@@ -37,9 +38,14 @@ cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, in
     cdef int count=len(switches)+1
     cdef list feasible=[]
     cdef list certificate=[]
+    cdef list pwarx_certificate=[]
     cdef int i, j
     cdef int status
     slack=False
+
+    ## Setting log level
+    logger=logging.getLogger('dev')
+
     ## Refine the switching sequence
     switches=[0]+switches + [len(dataset.r)]
 
@@ -50,7 +56,7 @@ cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, in
         a=k
 
     ## Print switching sequence to give an indication of progression
-    logging.debug("switches {}".format(switches))
+    logger.debug("switches {}".format(switches))
     
     ## Check the intervals between switching for feasibility
     for i in range(count):
@@ -68,7 +74,23 @@ cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, in
 
     ## Return to the SAT solver if any interval is deemed infeasible
     if 2 in feasible or 3 in feasible or 0 in feasible:
-        return(certificate,[],[],3,dictionary)
+        return(certificate,[],[],3,dictionary,[])
+
+    feasible=[]
+    ## In case of an PWARX system perform a check to
+    #  determine whether the datapoints from adjecent intervals are linearly seperable
+    if pwarx==1:
+        for i in range(count-1):
+            status=checkPoints.intersect(1000*b[i],1000*b[i+1],delta)
+            feasible.append(status)
+
+            ## Add certificate when a switch is not correct
+            if status > 1:
+                pwarx_certificate.append(switches[i:i+3])
+
+    ## Return to the SAT solver if any interval is deemed infeasible
+    if 2 in feasible or 3 in feasible:
+        return(certificate,[],[],3,dictionary,pwarx_certificate)
 
     ## Create regressor and output
     for j in b:
@@ -78,7 +100,7 @@ cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, in
     ## Return found models from L1 relaxed optimization problem
     (model,Nl,status)=sp.L1(regressor,ny,nu,delta,output,10,0.01,models,inputs,outputs,oldmodels,unstuck)
     if status == 1:
-        return([],model,Nl,status,dictionary)
+        return([],model,Nl,status,dictionary,[])
             
 
  

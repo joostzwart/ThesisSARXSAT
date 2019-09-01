@@ -12,6 +12,7 @@ cdef class Dataset:
     cdef public list dictionary
     cdef public list Sigma
     cdef public list n
+    cdef public list pwarx_certificate
     cdef public int T
 
     def __init__(self,double[:,:] output,double[:,:] regressor,double[:,:] input):
@@ -20,6 +21,7 @@ cdef class Dataset:
         self.u=input
         self.n=[]
         self.certificate=[]
+        self.pwarx_certificate=[]
         self.switches=[]
         self.model=[]
         self.Nl=[]

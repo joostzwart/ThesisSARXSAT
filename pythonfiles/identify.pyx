@@ -11,20 +11,25 @@ import logging
 import storage
 import time
 import export
+import partition
+import matplotlib.pyplot as plt
+from sys import stdout, stderr
+from io import StringIO
 
-def main(self,**kwargs):
+def main(self,gui,**kwargs):
     """
     Main function of this application. Can be run independently or used via the GUI
     """
     ## type casting
     cdef int ny, nu, dw, blocks, splitlargedataset, inputs, outputs, modes,\
-        T, modelgeneration, NOD, i
+        T, modelgeneration, NOD, i, pwarx
     cdef double delta, nt, error, mse
     cdef np.ndarray Yt, Ut, Rt, theta, output, input, r
     cdef list n, block, Y, U, R, Fmodels, sigma, swt
 
     ## Initialize parameters from gui or use static ones if no gui was used
     #if __name__ == '__main__':
+    Ls=1
     ny=2
     nu=1
     dw=15
@@ -37,8 +42,10 @@ def main(self,**kwargs):
     nt = 0.01
     T=180
     seed=random.randint(1,100)
-    seed=95
     modelgeneration=2
+    pwarx=0
+    inputfile = "Data/DatasetInput_Ts_20(J).txt"
+    outputfile = "Data/Datasetoutput_Ts_20(J).txt"
 
     ## Converting kwargs to locals
     if 'ny' in kwargs:
@@ -69,6 +76,14 @@ def main(self,**kwargs):
         pwarx=kwargs['pwarx']
     if 'modelgeneration' in kwargs:
         modelgeneration = kwargs['modelgeneration']
+    if 'outputfile' in kwargs:
+        outputfile = kwargs['outputfile']
+    if 'inputfile' in kwargs:
+        inputfile = kwargs['inputfile']
+    if 'Ls' in kwargs:
+        Ls = kwargs['Ls']
+
+
 
     ## Parameters
     nod=1
@@ -84,23 +99,37 @@ def main(self,**kwargs):
     # and features for specific blocks
     oldmodels=set(())
     cdef list Run=[None] * blocks
-    logging.basicConfig(level=10)
 
+    ## Configure logger
+    logging.info("initialize logger")
+    baseLogger = logging.getLogger('dev')
+    baseLogger.setLevel(20)
+    strio = StringIO()
+    Console = logging.StreamHandler(strio)
+    baseLogger.addHandler(Console)
+    #logger2=logging.getLogger('mainlogger')
+    #logger2.setLevel(10)
     t1=time.time()
     if modelgeneration==1:
         ## Create preference object
-        Par=parameters.Parameters(T,ny,nu,delta,dw,nt,inputs,outputs,chuncks,oldmodels,nod)
+        Par=parameters.Parameters(T,ny,nu,delta,dw,nt,inputs,outputs,chuncks,oldmodels,nod,pwarx,Ls)
         Pref=parameters.Preferences(merging,splitlargedataset,modelgeneration,seed,unstuck)
         L0.main(Par, Pref)
 
     if modelgeneration==2 or modelgeneration == 3:
         ## Simulate data to the file and read it again (seems superfluous but
         # necessary feature for importing textfiles in a later stadium)
-        (theta,n)=DataGenerator.generate(T,ny,nu,inputs,outputs,nt,modes,dw,seed,pwarx)
-        (input, output, inputs, outputs, T, r)=ReaderData.Read(nu,ny,modelgeneration)
+        (theta,n,H)=DataGenerator.generate(T,ny,nu,inputs,outputs,nt,modes,dw,seed,pwarx)
+        (input, output, inputs, outputs, T, r)=ReaderData.Read(nu,ny,modelgeneration,input=inputfile,output=outputfile)
+
+        ## extend regressor in case of pwarx
+        if pwarx==1:
+            extendedregressor=np.ones((r.shape[0],r.shape[1]+1))
+            extendedregressor[:,:-1]=r
+            r=extendedregressor
 
         ## plot input and output when using gui
-        if not __name__ == '__main__':
+        if not __name__ == '__main__' and gui:
             self.ax.plot(output[0], 'r-')
             self.ax.plot(input[0], 'b-')
             self.ax.legend(['Output', 'Input'])
@@ -112,13 +141,14 @@ def main(self,**kwargs):
             self.plotOutput.draw()
 
         ## Create preference object
-        Par=parameters.Parameters(T,ny,nu,delta,dw,nt,inputs,outputs,chuncks,oldmodels,nod)
+        Par=parameters.Parameters(T,ny,nu,delta,dw,nt,inputs,outputs,chuncks,oldmodels,nod,pwarx,Ls)
         Pref=parameters.Preferences(merging,splitlargedataset,modelgeneration,seed,unstuck)
 
         ## Some information for debugging purposes
-        logging.debug("The seed that was used = {}".format(seed))
-        logging.debug("Theta used for simulation = {}".format(theta))
-
+        baseLogger.debug("The seed that was used = {}".format(seed))
+        baseLogger.debug("Theta used for simulation = {}".format(theta))
+        baseLogger.debug("The switching sequence used: {}".format(n))
+        #logger2.debug("The seed that was used = {}".format(seed))
         ## Split the Data
         Y=np.array_split(output,blocks,axis=1)
         U=np.array_split(input,blocks,axis=1)
@@ -132,11 +162,13 @@ def main(self,**kwargs):
         ## Run the solver for each data "block"
         for i in range(blocks):
             Run[i]=L0.main(Par, Pref, ProvidedDataset=block[i], theta=theta, n=n)
-            if not __name__ == '__main__':
+            if not __name__ == '__main__' and gui:
                 self.progressbar.setValue(int((100/blocks)*(i+1)))
             for model in Run[i][0].modelfinal:
                 Par.oldmodels.add(tuple(model))
-            logging.debug("Nl for this run = {}".format(Run[i][0].Nl))
+            baseLogger.debug("Nl for this run = {}".format(Run[i][0].Nl))
+            if gui:
+                block_operations.updateLog(self,Console)
 
         ## Retrieve final switching sequence
         Yt=np.hstack(([Y[i] for i in range(blocks)]))
@@ -147,11 +179,31 @@ def main(self,**kwargs):
         ## Retrieve models, switching sequence and switches
         (Fmodels,sigmat,swt) = block_operations.merge_blocks(Run,blocks)
         storage.datastorage(Fmodels, Par, 'HVAC', 'Full HVAC dataset', 0, 0, sigmat, 0)
-        (error,mse,sigmat)=block_operations.hitting_set_model_reduction(input,output,r,nu,ny,inputs,outputs,swt,Fmodels,delta,theta,n,modelgeneration)
+        (error,mse,sigmat)=block_operations.hitting_set_model_reduction(self,Console,input,output,r,nu,ny,inputs,outputs,swt,Fmodels,delta,theta,n,modelgeneration,gui)
         t2=time.time()
-        logging.info("Total time for identification process: {}".format(t2-t1))
+        baseLogger.info("Total time for identification process: {}".format(t2-t1))
+        if gui:
+            block_operations.updateLog(self,Console)
         storage.datastorage(Fmodels, Par,'HVAC','Full HVAC dataset, with error correct',error,mse,sigmat,float(t2-t1))
-        export.exportToMatlab(Fmodels,sigmat,Ut,Yt,Rt)
 
+
+        ## plot switching sequence in case of using the gui
+        if not __name__ == '__main__' and gui:
+            cm = plt.cm.get_cmap('tab20')
+            scatterplot=self.ax_switching.scatter(np.array(list(range(1,len(sigmat)+1))),sigmat,c=sigmat,s=200,marker='x')
+            legend1=self.ax_switching.legend(*scatterplot.legend_elements(),
+                    loc="upper right", title="Modes")
+            self.ax_switching.add_artist(legend1)
+            self.ax_switching.grid()
+            self.ax_switching.set_xlabel('[k]')
+            self.ax_switching.set_ylabel('mode')
+            self.plot_switching.draw()
+        ## in case of a PWARX model, partition the regressorspace
+        if pwarx==1:
+            Ht=partition.partition(Rt,sigmat,max(sigmat)+1)
+        else:
+            Ht=[]
+        export.exportToMatlab(Fmodels,sigmat,Ut,Yt,Rt,Ht,pwarx)
+        return(n,sigmat,error,mse)
 if __name__ == '__main__':
     main([])

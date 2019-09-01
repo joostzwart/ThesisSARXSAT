@@ -822,7 +822,7 @@ struct __pyx_obj_10parameters_Parameters;
 /* "parameters.pyx":1
  * cdef class Parameters:             # <<<<<<<<<<<<<<
  *     """Class that keeps track of user parameters"""
- *     cdef public int T, ny, nu, dw, inputs, outputs, nod
+ *     cdef public int T, ny, nu, dw, inputs, outputs, nod, pwarx, Ls
  */
 struct __pyx_obj_10parameters_Parameters {
   PyObject_HEAD
@@ -833,6 +833,8 @@ struct __pyx_obj_10parameters_Parameters {
   int inputs;
   int outputs;
   int nod;
+  int pwarx;
+  int Ls;
   int chunks;
   int merging;
   int splitlargedataset;
@@ -1279,6 +1281,7 @@ int __pyx_module_is_main_parameters = 0;
 
 /* Implementation of 'parameters' */
 static const char __pyx_k_T[] = "T";
+static const char __pyx_k_Ls[] = "Ls";
 static const char __pyx_k_dw[] = "dw";
 static const char __pyx_k_nt[] = "nt";
 static const char __pyx_k_nu[] = "nu";
@@ -1294,6 +1297,7 @@ static const char __pyx_k_seed[] = "seed";
 static const char __pyx_k_self[] = "self";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_delta[] = "delta";
+static const char __pyx_k_pwarx[] = "pwarx";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_inputs[] = "inputs";
 static const char __pyx_k_module[] = "__module__";
@@ -1329,8 +1333,9 @@ static const char __pyx_k_Preferences___init[] = "Preferences.__init__";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_pyx_unpickle_Parameters[] = "__pyx_unpickle_Parameters";
 static const char __pyx_k_pythonfiles_parameters_pyx[] = "pythonfiles/parameters.pyx";
-static const char __pyx_k_Incompatible_checksums_s_vs_0x66[] = "Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))";
-static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0x66;
+static const char __pyx_k_Incompatible_checksums_s_vs_0xc7[] = "Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))";
+static PyObject *__pyx_kp_s_Incompatible_checksums_s_vs_0xc7;
+static PyObject *__pyx_n_s_Ls;
 static PyObject *__pyx_n_s_Parameters;
 static PyObject *__pyx_n_s_PickleError;
 static PyObject *__pyx_n_s_Preferences;
@@ -1362,6 +1367,7 @@ static PyObject *__pyx_n_s_outputs;
 static PyObject *__pyx_n_s_parameters;
 static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_prepare;
+static PyObject *__pyx_n_s_pwarx;
 static PyObject *__pyx_kp_s_pythonfiles_parameters_pyx;
 static PyObject *__pyx_n_s_pyx_PickleError;
 static PyObject *__pyx_n_s_pyx_checksum;
@@ -1382,7 +1388,7 @@ static PyObject *__pyx_kp_s_stringsource;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_unstuck;
 static PyObject *__pyx_n_s_update;
-static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, int __pyx_v_T, int __pyx_v_ny, int __pyx_v_nu, double __pyx_v_delta, int __pyx_v_dw, double __pyx_v_nt, int __pyx_v_inputs, int __pyx_v_outputs, int __pyx_v_chuncks, PyObject *__pyx_v_oldmodels, int __pyx_v_nod); /* proto */
+static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, int __pyx_v_T, int __pyx_v_ny, int __pyx_v_nu, double __pyx_v_delta, int __pyx_v_dw, double __pyx_v_nt, int __pyx_v_inputs, int __pyx_v_outputs, int __pyx_v_chuncks, PyObject *__pyx_v_oldmodels, int __pyx_v_nod, int __pyx_v_pwarx, int __pyx_v_Ls); /* proto */
 static PyObject *__pyx_pf_10parameters_10Parameters_1T___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
 static int __pyx_pf_10parameters_10Parameters_1T_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_10parameters_10Parameters_2ny___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
@@ -1397,6 +1403,10 @@ static PyObject *__pyx_pf_10parameters_10Parameters_7outputs___get__(struct __py
 static int __pyx_pf_10parameters_10Parameters_7outputs_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_10parameters_10Parameters_3nod___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
 static int __pyx_pf_10parameters_10Parameters_3nod_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_10parameters_10Parameters_5pwarx___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
+static int __pyx_pf_10parameters_10Parameters_5pwarx_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_10parameters_10Parameters_2Ls___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
+static int __pyx_pf_10parameters_10Parameters_2Ls_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_10parameters_10Parameters_6chunks___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
 static int __pyx_pf_10parameters_10Parameters_6chunks_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
 static PyObject *__pyx_pf_10parameters_10Parameters_7merging___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self); /* proto */
@@ -1419,7 +1429,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_4__setstate_cython__(struct 
 static PyObject *__pyx_pf_10parameters_11Preferences___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, int __pyx_v_merging, int __pyx_v_splitlargedataset, int __pyx_v_modelgeneration, PyObject *__pyx_v_seed, int __pyx_v_unstuck); /* proto */
 static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_tp_new_10parameters_Parameters(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_int_107560950;
+static PyObject *__pyx_int_209709624;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_codeobj__2;
@@ -1430,7 +1440,7 @@ static PyObject *__pyx_codeobj__4;
  *     cdef public set oldmodels
  * 
  *     def __init__(self,int T,int ny,int nu,double delta,int dw,double nt,int inputs,             # <<<<<<<<<<<<<<
- *                  int outputs,int chuncks,oldmodels,int nod):
+ *                  int outputs,int chuncks,oldmodels,int nod, int pwarx,int Ls):
  *         self.T=T
  */
 
@@ -1448,16 +1458,22 @@ static int __pyx_pw_10parameters_10Parameters_1__init__(PyObject *__pyx_v_self, 
   int __pyx_v_chuncks;
   PyObject *__pyx_v_oldmodels = 0;
   int __pyx_v_nod;
+  int __pyx_v_pwarx;
+  int __pyx_v_Ls;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__init__ (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_T,&__pyx_n_s_ny,&__pyx_n_s_nu,&__pyx_n_s_delta,&__pyx_n_s_dw,&__pyx_n_s_nt,&__pyx_n_s_inputs,&__pyx_n_s_outputs,&__pyx_n_s_chuncks,&__pyx_n_s_oldmodels,&__pyx_n_s_nod,0};
-    PyObject* values[11] = {0,0,0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_T,&__pyx_n_s_ny,&__pyx_n_s_nu,&__pyx_n_s_delta,&__pyx_n_s_dw,&__pyx_n_s_nt,&__pyx_n_s_inputs,&__pyx_n_s_outputs,&__pyx_n_s_chuncks,&__pyx_n_s_oldmodels,&__pyx_n_s_nod,&__pyx_n_s_pwarx,&__pyx_n_s_Ls,0};
+    PyObject* values[13] = {0,0,0,0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 13: values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
+        CYTHON_FALLTHROUGH;
+        case 12: values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
+        CYTHON_FALLTHROUGH;
         case 11: values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
         CYTHON_FALLTHROUGH;
         case 10: values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
@@ -1492,67 +1508,79 @@ static int __pyx_pw_10parameters_10Parameters_1__init__(PyObject *__pyx_v_self, 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ny)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 1); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 1); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nu)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 2); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 2); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_delta)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 3); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 3); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dw)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 4); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 4); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nt)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 5); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 5); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_inputs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 6); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 6); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_outputs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 7); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 7); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_chuncks)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 8); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 8); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_oldmodels)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 9); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 9); __PYX_ERR(0, 8, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nod)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, 10); __PYX_ERR(0, 8, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 10); __PYX_ERR(0, 8, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case 11:
+        if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pwarx)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 11); __PYX_ERR(0, 8, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case 12:
+        if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ls)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, 12); __PYX_ERR(0, 8, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 8, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 11) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 13) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -1566,6 +1594,8 @@ static int __pyx_pw_10parameters_10Parameters_1__init__(PyObject *__pyx_v_self, 
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
       values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
+      values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
+      values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
     }
     __pyx_v_T = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_T == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
     __pyx_v_ny = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_ny == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 8, __pyx_L3_error)
@@ -1578,23 +1608,25 @@ static int __pyx_pw_10parameters_10Parameters_1__init__(PyObject *__pyx_v_self, 
     __pyx_v_chuncks = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_chuncks == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
     __pyx_v_oldmodels = values[9];
     __pyx_v_nod = __Pyx_PyInt_As_int(values[10]); if (unlikely((__pyx_v_nod == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_pwarx = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_pwarx == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
+    __pyx_v_Ls = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_Ls == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 9, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 11, 11, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 8, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("parameters.Parameters.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10parameters_10Parameters___init__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self), __pyx_v_T, __pyx_v_ny, __pyx_v_nu, __pyx_v_delta, __pyx_v_dw, __pyx_v_nt, __pyx_v_inputs, __pyx_v_outputs, __pyx_v_chuncks, __pyx_v_oldmodels, __pyx_v_nod);
+  __pyx_r = __pyx_pf_10parameters_10Parameters___init__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self), __pyx_v_T, __pyx_v_ny, __pyx_v_nu, __pyx_v_delta, __pyx_v_dw, __pyx_v_nt, __pyx_v_inputs, __pyx_v_outputs, __pyx_v_chuncks, __pyx_v_oldmodels, __pyx_v_nod, __pyx_v_pwarx, __pyx_v_Ls);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, int __pyx_v_T, int __pyx_v_ny, int __pyx_v_nu, double __pyx_v_delta, int __pyx_v_dw, double __pyx_v_nt, int __pyx_v_inputs, int __pyx_v_outputs, int __pyx_v_chuncks, PyObject *__pyx_v_oldmodels, int __pyx_v_nod) {
+static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, int __pyx_v_T, int __pyx_v_ny, int __pyx_v_nu, double __pyx_v_delta, int __pyx_v_dw, double __pyx_v_nt, int __pyx_v_inputs, int __pyx_v_outputs, int __pyx_v_chuncks, PyObject *__pyx_v_oldmodels, int __pyx_v_nod, int __pyx_v_pwarx, int __pyx_v_Ls) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1602,7 +1634,7 @@ static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parame
 
   /* "parameters.pyx":10
  *     def __init__(self,int T,int ny,int nu,double delta,int dw,double nt,int inputs,
- *                  int outputs,int chuncks,oldmodels,int nod):
+ *                  int outputs,int chuncks,oldmodels,int nod, int pwarx,int Ls):
  *         self.T=T             # <<<<<<<<<<<<<<
  *         self.ny=ny
  *         self.nu=nu
@@ -1610,7 +1642,7 @@ static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parame
   __pyx_v_self->T = __pyx_v_T;
 
   /* "parameters.pyx":11
- *                  int outputs,int chuncks,oldmodels,int nod):
+ *                  int outputs,int chuncks,oldmodels,int nod, int pwarx,int Ls):
  *         self.T=T
  *         self.ny=ny             # <<<<<<<<<<<<<<
  *         self.nu=nu
@@ -1686,7 +1718,7 @@ static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parame
  *         self.chunks=chuncks
  *         self.oldmodels=oldmodels             # <<<<<<<<<<<<<<
  *         self.nod=nod
- * 
+ *         self.pwarx=pwarx
  */
   if (!(likely(PySet_CheckExact(__pyx_v_oldmodels))||((__pyx_v_oldmodels) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_v_oldmodels)->tp_name), 0))) __PYX_ERR(0, 19, __pyx_L1_error)
   __pyx_t_1 = __pyx_v_oldmodels;
@@ -1701,16 +1733,34 @@ static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parame
  *         self.chunks=chuncks
  *         self.oldmodels=oldmodels
  *         self.nod=nod             # <<<<<<<<<<<<<<
+ *         self.pwarx=pwarx
+ *         self.Ls=Ls
+ */
+  __pyx_v_self->nod = __pyx_v_nod;
+
+  /* "parameters.pyx":21
+ *         self.oldmodels=oldmodels
+ *         self.nod=nod
+ *         self.pwarx=pwarx             # <<<<<<<<<<<<<<
+ *         self.Ls=Ls
+ * 
+ */
+  __pyx_v_self->pwarx = __pyx_v_pwarx;
+
+  /* "parameters.pyx":22
+ *         self.nod=nod
+ *         self.pwarx=pwarx
+ *         self.Ls=Ls             # <<<<<<<<<<<<<<
  * 
  * class Preferences:
  */
-  __pyx_v_self->nod = __pyx_v_nod;
+  __pyx_v_self->Ls = __pyx_v_Ls;
 
   /* "parameters.pyx":8
  *     cdef public set oldmodels
  * 
  *     def __init__(self,int T,int ny,int nu,double delta,int dw,double nt,int inputs,             # <<<<<<<<<<<<<<
- *                  int outputs,int chuncks,oldmodels,int nod):
+ *                  int outputs,int chuncks,oldmodels,int nod, int pwarx,int Ls):
  *         self.T=T
  */
 
@@ -1729,7 +1779,7 @@ static int __pyx_pf_10parameters_10Parameters___init__(struct __pyx_obj_10parame
 /* "parameters.pyx":3
  * cdef class Parameters:
  *     """Class that keeps track of user parameters"""
- *     cdef public int T, ny, nu, dw, inputs, outputs, nod             # <<<<<<<<<<<<<<
+ *     cdef public int T, ny, nu, dw, inputs, outputs, nod, pwarx, Ls             # <<<<<<<<<<<<<<
  *     cdef public int chunks, merging, splitlargedataset, modelgeneration, unstuck
  *     cdef public double delta, nt
  */
@@ -2210,9 +2260,145 @@ static int __pyx_pf_10parameters_10Parameters_3nod_2__set__(struct __pyx_obj_10p
   return __pyx_r;
 }
 
+/* Python wrapper */
+static PyObject *__pyx_pw_10parameters_10Parameters_5pwarx_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_10parameters_10Parameters_5pwarx_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_10parameters_10Parameters_5pwarx___get__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_10parameters_10Parameters_5pwarx___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->pwarx); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("parameters.Parameters.pwarx.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_10parameters_10Parameters_5pwarx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_10parameters_10Parameters_5pwarx_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_10parameters_10Parameters_5pwarx_2__set__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_10parameters_10Parameters_5pwarx_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  __Pyx_RefNannySetupContext("__set__", 0);
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_v_self->pwarx = __pyx_t_1;
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("parameters.Parameters.pwarx.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static PyObject *__pyx_pw_10parameters_10Parameters_2Ls_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_10parameters_10Parameters_2Ls_1__get__(PyObject *__pyx_v_self) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_10parameters_10Parameters_2Ls___get__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_10parameters_10Parameters_2Ls___get__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("__get__", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->Ls); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 3, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("parameters.Parameters.Ls.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* Python wrapper */
+static int __pyx_pw_10parameters_10Parameters_2Ls_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_10parameters_10Parameters_2Ls_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
+  __pyx_r = __pyx_pf_10parameters_10Parameters_2Ls_2__set__(((struct __pyx_obj_10parameters_Parameters *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static int __pyx_pf_10parameters_10Parameters_2Ls_2__set__(struct __pyx_obj_10parameters_Parameters *__pyx_v_self, PyObject *__pyx_v_value) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  __Pyx_RefNannySetupContext("__set__", 0);
+  __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_value); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 3, __pyx_L1_error)
+  __pyx_v_self->Ls = __pyx_t_1;
+
+  /* function exit code */
+  __pyx_r = 0;
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("parameters.Parameters.Ls.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = -1;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 /* "parameters.pyx":4
  *     """Class that keeps track of user parameters"""
- *     cdef public int T, ny, nu, dw, inputs, outputs, nod
+ *     cdef public int T, ny, nu, dw, inputs, outputs, nod, pwarx, Ls
  *     cdef public int chunks, merging, splitlargedataset, modelgeneration, unstuck             # <<<<<<<<<<<<<<
  *     cdef public double delta, nt
  *     cdef public set oldmodels
@@ -2559,7 +2745,7 @@ static int __pyx_pf_10parameters_10Parameters_7unstuck_2__set__(struct __pyx_obj
 }
 
 /* "parameters.pyx":5
- *     cdef public int T, ny, nu, dw, inputs, outputs, nod
+ *     cdef public int T, ny, nu, dw, inputs, outputs, nod, pwarx, Ls
  *     cdef public int chunks, merging, splitlargedataset, modelgeneration, unstuck
  *     cdef public double delta, nt             # <<<<<<<<<<<<<<
  *     cdef public set oldmodels
@@ -2847,78 +3033,88 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
   PyObject *__pyx_t_13 = NULL;
   PyObject *__pyx_t_14 = NULL;
   PyObject *__pyx_t_15 = NULL;
-  int __pyx_t_16;
-  int __pyx_t_17;
+  PyObject *__pyx_t_16 = NULL;
+  PyObject *__pyx_t_17 = NULL;
+  int __pyx_t_18;
+  int __pyx_t_19;
   __Pyx_RefNannySetupContext("__reduce_cython__", 0);
 
   /* "(tree fragment)":5
  *     cdef object _dict
  *     cdef bint use_setstate
- *     state = (self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.splitlargedataset, self.unstuck)             # <<<<<<<<<<<<<<
+ *     state = (self.Ls, self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.pwarx, self.splitlargedataset, self.unstuck)             # <<<<<<<<<<<<<<
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->T); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_self->Ls); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->chunks); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_self->T); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_self->delta); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_self->chunks); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_self->dw); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_self->delta); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->inputs); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_self->dw); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_self->merging); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_self->inputs); if (unlikely(!__pyx_t_6)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_self->modelgeneration); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_self->merging); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_self->nod); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_From_int(__pyx_v_self->modelgeneration); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
-  __pyx_t_9 = PyFloat_FromDouble(__pyx_v_self->nt); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_self->nod); if (unlikely(!__pyx_t_9)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_v_self->nu); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_10 = PyFloat_FromDouble(__pyx_v_self->nt); if (unlikely(!__pyx_t_10)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_10);
-  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_self->ny); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_self->nu); if (unlikely(!__pyx_t_11)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_11);
-  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_self->outputs); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_12 = __Pyx_PyInt_From_int(__pyx_v_self->ny); if (unlikely(!__pyx_t_12)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_12);
-  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_self->splitlargedataset); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_13 = __Pyx_PyInt_From_int(__pyx_v_self->outputs); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_13);
-  __pyx_t_14 = __Pyx_PyInt_From_int(__pyx_v_self->unstuck); if (unlikely(!__pyx_t_14)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_14 = __Pyx_PyInt_From_int(__pyx_v_self->pwarx); if (unlikely(!__pyx_t_14)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_14);
-  __pyx_t_15 = PyTuple_New(15); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __pyx_t_15 = __Pyx_PyInt_From_int(__pyx_v_self->splitlargedataset); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_15);
+  __pyx_t_16 = __Pyx_PyInt_From_int(__pyx_v_self->unstuck); if (unlikely(!__pyx_t_16)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_16);
+  __pyx_t_17 = PyTuple_New(17); if (unlikely(!__pyx_t_17)) __PYX_ERR(1, 5, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_17);
   __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_1);
   __Pyx_GIVEREF(__pyx_t_2);
-  PyTuple_SET_ITEM(__pyx_t_15, 1, __pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_17, 2, __pyx_t_3);
   __Pyx_GIVEREF(__pyx_t_4);
-  PyTuple_SET_ITEM(__pyx_t_15, 3, __pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_17, 3, __pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_5);
-  PyTuple_SET_ITEM(__pyx_t_15, 4, __pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_17, 4, __pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_6);
-  PyTuple_SET_ITEM(__pyx_t_15, 5, __pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_17, 5, __pyx_t_6);
   __Pyx_GIVEREF(__pyx_t_7);
-  PyTuple_SET_ITEM(__pyx_t_15, 6, __pyx_t_7);
+  PyTuple_SET_ITEM(__pyx_t_17, 6, __pyx_t_7);
   __Pyx_GIVEREF(__pyx_t_8);
-  PyTuple_SET_ITEM(__pyx_t_15, 7, __pyx_t_8);
+  PyTuple_SET_ITEM(__pyx_t_17, 7, __pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_9);
-  PyTuple_SET_ITEM(__pyx_t_15, 8, __pyx_t_9);
+  PyTuple_SET_ITEM(__pyx_t_17, 8, __pyx_t_9);
   __Pyx_GIVEREF(__pyx_t_10);
-  PyTuple_SET_ITEM(__pyx_t_15, 9, __pyx_t_10);
+  PyTuple_SET_ITEM(__pyx_t_17, 9, __pyx_t_10);
   __Pyx_GIVEREF(__pyx_t_11);
-  PyTuple_SET_ITEM(__pyx_t_15, 10, __pyx_t_11);
+  PyTuple_SET_ITEM(__pyx_t_17, 10, __pyx_t_11);
+  __Pyx_GIVEREF(__pyx_t_12);
+  PyTuple_SET_ITEM(__pyx_t_17, 11, __pyx_t_12);
   __Pyx_INCREF(__pyx_v_self->oldmodels);
   __Pyx_GIVEREF(__pyx_v_self->oldmodels);
-  PyTuple_SET_ITEM(__pyx_t_15, 11, __pyx_v_self->oldmodels);
-  __Pyx_GIVEREF(__pyx_t_12);
-  PyTuple_SET_ITEM(__pyx_t_15, 12, __pyx_t_12);
+  PyTuple_SET_ITEM(__pyx_t_17, 12, __pyx_v_self->oldmodels);
   __Pyx_GIVEREF(__pyx_t_13);
-  PyTuple_SET_ITEM(__pyx_t_15, 13, __pyx_t_13);
+  PyTuple_SET_ITEM(__pyx_t_17, 13, __pyx_t_13);
   __Pyx_GIVEREF(__pyx_t_14);
-  PyTuple_SET_ITEM(__pyx_t_15, 14, __pyx_t_14);
+  PyTuple_SET_ITEM(__pyx_t_17, 14, __pyx_t_14);
+  __Pyx_GIVEREF(__pyx_t_15);
+  PyTuple_SET_ITEM(__pyx_t_17, 15, __pyx_t_15);
+  __Pyx_GIVEREF(__pyx_t_16);
+  PyTuple_SET_ITEM(__pyx_t_17, 16, __pyx_t_16);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
   __pyx_t_3 = 0;
@@ -2933,31 +3129,33 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
   __pyx_t_12 = 0;
   __pyx_t_13 = 0;
   __pyx_t_14 = 0;
-  __pyx_v_state = ((PyObject*)__pyx_t_15);
   __pyx_t_15 = 0;
+  __pyx_t_16 = 0;
+  __pyx_v_state = ((PyObject*)__pyx_t_17);
+  __pyx_t_17 = 0;
 
   /* "(tree fragment)":6
  *     cdef bint use_setstate
- *     state = (self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.splitlargedataset, self.unstuck)
+ *     state = (self.Ls, self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.pwarx, self.splitlargedataset, self.unstuck)
  *     _dict = getattr(self, '__dict__', None)             # <<<<<<<<<<<<<<
  *     if _dict is not None:
  *         state += (_dict,)
  */
-  __pyx_t_15 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 6, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_15);
-  __pyx_v__dict = __pyx_t_15;
-  __pyx_t_15 = 0;
+  __pyx_t_17 = __Pyx_GetAttr3(((PyObject *)__pyx_v_self), __pyx_n_s_dict, Py_None); if (unlikely(!__pyx_t_17)) __PYX_ERR(1, 6, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_17);
+  __pyx_v__dict = __pyx_t_17;
+  __pyx_t_17 = 0;
 
   /* "(tree fragment)":7
- *     state = (self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.splitlargedataset, self.unstuck)
+ *     state = (self.Ls, self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.pwarx, self.splitlargedataset, self.unstuck)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
  *         use_setstate = True
  */
-  __pyx_t_16 = (__pyx_v__dict != Py_None);
-  __pyx_t_17 = (__pyx_t_16 != 0);
-  if (__pyx_t_17) {
+  __pyx_t_18 = (__pyx_v__dict != Py_None);
+  __pyx_t_19 = (__pyx_t_18 != 0);
+  if (__pyx_t_19) {
 
     /* "(tree fragment)":8
  *     _dict = getattr(self, '__dict__', None)
@@ -2966,16 +3164,16 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
  *         use_setstate = True
  *     else:
  */
-    __pyx_t_15 = PyTuple_New(1); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 8, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
+    __pyx_t_17 = PyTuple_New(1); if (unlikely(!__pyx_t_17)) __PYX_ERR(1, 8, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
     __Pyx_INCREF(__pyx_v__dict);
     __Pyx_GIVEREF(__pyx_v__dict);
-    PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_v__dict);
-    __pyx_t_14 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(1, 8, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
-    __Pyx_DECREF_SET(__pyx_v_state, ((PyObject*)__pyx_t_14));
-    __pyx_t_14 = 0;
+    PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_v__dict);
+    __pyx_t_16 = PyNumber_InPlaceAdd(__pyx_v_state, __pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(1, 8, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_16);
+    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+    __Pyx_DECREF_SET(__pyx_v_state, ((PyObject*)__pyx_t_16));
+    __pyx_t_16 = 0;
 
     /* "(tree fragment)":9
  *     if _dict is not None:
@@ -2987,7 +3185,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
     __pyx_v_use_setstate = 1;
 
     /* "(tree fragment)":7
- *     state = (self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.splitlargedataset, self.unstuck)
+ *     state = (self.Ls, self.T, self.chunks, self.delta, self.dw, self.inputs, self.merging, self.modelgeneration, self.nod, self.nt, self.nu, self.ny, self.oldmodels, self.outputs, self.pwarx, self.splitlargedataset, self.unstuck)
  *     _dict = getattr(self, '__dict__', None)
  *     if _dict is not None:             # <<<<<<<<<<<<<<
  *         state += (_dict,)
@@ -3001,11 +3199,11 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
  *     else:
  *         use_setstate = self.oldmodels is not None             # <<<<<<<<<<<<<<
  *     if use_setstate:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, None), state
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, None), state
  */
   /*else*/ {
-    __pyx_t_17 = (__pyx_v_self->oldmodels != ((PyObject*)Py_None));
-    __pyx_v_use_setstate = __pyx_t_17;
+    __pyx_t_19 = (__pyx_v_self->oldmodels != ((PyObject*)Py_None));
+    __pyx_v_use_setstate = __pyx_t_19;
   }
   __pyx_L3:;
 
@@ -3013,89 +3211,89 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
  *     else:
  *         use_setstate = self.oldmodels is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, None), state
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, None), state
  *     else:
  */
-  __pyx_t_17 = (__pyx_v_use_setstate != 0);
-  if (__pyx_t_17) {
+  __pyx_t_19 = (__pyx_v_use_setstate != 0);
+  if (__pyx_t_19) {
 
     /* "(tree fragment)":13
  *         use_setstate = self.oldmodels is not None
  *     if use_setstate:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, None), state             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, None), state             # <<<<<<<<<<<<<<
  *     else:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, state)
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, state)
  */
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_GetModuleGlobalName(__pyx_t_14, __pyx_n_s_pyx_unpickle_Parameters); if (unlikely(!__pyx_t_14)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_15);
+    __Pyx_GetModuleGlobalName(__pyx_t_16, __pyx_n_s_pyx_unpickle_Parameters); if (unlikely(!__pyx_t_16)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_16);
+    __pyx_t_17 = PyTuple_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_15, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_107560950);
-    __Pyx_GIVEREF(__pyx_int_107560950);
-    PyTuple_SET_ITEM(__pyx_t_15, 1, __pyx_int_107560950);
+    PyTuple_SET_ITEM(__pyx_t_17, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_209709624);
+    __Pyx_GIVEREF(__pyx_int_209709624);
+    PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_int_209709624);
     __Pyx_INCREF(Py_None);
     __Pyx_GIVEREF(Py_None);
-    PyTuple_SET_ITEM(__pyx_t_15, 2, Py_None);
-    __pyx_t_13 = PyTuple_New(3); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 13, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_13);
-    __Pyx_GIVEREF(__pyx_t_14);
-    PyTuple_SET_ITEM(__pyx_t_13, 0, __pyx_t_14);
-    __Pyx_GIVEREF(__pyx_t_15);
-    PyTuple_SET_ITEM(__pyx_t_13, 1, __pyx_t_15);
+    PyTuple_SET_ITEM(__pyx_t_17, 2, Py_None);
+    __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 13, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_15);
+    __Pyx_GIVEREF(__pyx_t_16);
+    PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_16);
+    __Pyx_GIVEREF(__pyx_t_17);
+    PyTuple_SET_ITEM(__pyx_t_15, 1, __pyx_t_17);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_13, 2, __pyx_v_state);
-    __pyx_t_14 = 0;
+    PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_v_state);
+    __pyx_t_16 = 0;
+    __pyx_t_17 = 0;
+    __pyx_r = __pyx_t_15;
     __pyx_t_15 = 0;
-    __pyx_r = __pyx_t_13;
-    __pyx_t_13 = 0;
     goto __pyx_L0;
 
     /* "(tree fragment)":12
  *     else:
  *         use_setstate = self.oldmodels is not None
  *     if use_setstate:             # <<<<<<<<<<<<<<
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, None), state
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, None), state
  *     else:
  */
   }
 
   /* "(tree fragment)":15
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, None), state
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, None), state
  *     else:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, state)             # <<<<<<<<<<<<<<
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, state)             # <<<<<<<<<<<<<<
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_Parameters__set_state(self, __pyx_state)
  */
   /*else*/ {
     __Pyx_XDECREF(__pyx_r);
-    __Pyx_GetModuleGlobalName(__pyx_t_13, __pyx_n_s_pyx_unpickle_Parameters); if (unlikely(!__pyx_t_13)) __PYX_ERR(1, 15, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_13);
-    __pyx_t_15 = PyTuple_New(3); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_15, __pyx_n_s_pyx_unpickle_Parameters); if (unlikely(!__pyx_t_15)) __PYX_ERR(1, 15, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_15);
+    __pyx_t_17 = PyTuple_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
     __Pyx_INCREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
     __Pyx_GIVEREF(((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    PyTuple_SET_ITEM(__pyx_t_15, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
-    __Pyx_INCREF(__pyx_int_107560950);
-    __Pyx_GIVEREF(__pyx_int_107560950);
-    PyTuple_SET_ITEM(__pyx_t_15, 1, __pyx_int_107560950);
+    PyTuple_SET_ITEM(__pyx_t_17, 0, ((PyObject *)Py_TYPE(((PyObject *)__pyx_v_self))));
+    __Pyx_INCREF(__pyx_int_209709624);
+    __Pyx_GIVEREF(__pyx_int_209709624);
+    PyTuple_SET_ITEM(__pyx_t_17, 1, __pyx_int_209709624);
     __Pyx_INCREF(__pyx_v_state);
     __Pyx_GIVEREF(__pyx_v_state);
-    PyTuple_SET_ITEM(__pyx_t_15, 2, __pyx_v_state);
-    __pyx_t_14 = PyTuple_New(2); if (unlikely(!__pyx_t_14)) __PYX_ERR(1, 15, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_14);
-    __Pyx_GIVEREF(__pyx_t_13);
-    PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_13);
+    PyTuple_SET_ITEM(__pyx_t_17, 2, __pyx_v_state);
+    __pyx_t_16 = PyTuple_New(2); if (unlikely(!__pyx_t_16)) __PYX_ERR(1, 15, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_16);
     __Pyx_GIVEREF(__pyx_t_15);
-    PyTuple_SET_ITEM(__pyx_t_14, 1, __pyx_t_15);
-    __pyx_t_13 = 0;
+    PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_15);
+    __Pyx_GIVEREF(__pyx_t_17);
+    PyTuple_SET_ITEM(__pyx_t_16, 1, __pyx_t_17);
     __pyx_t_15 = 0;
-    __pyx_r = __pyx_t_14;
-    __pyx_t_14 = 0;
+    __pyx_t_17 = 0;
+    __pyx_r = __pyx_t_16;
+    __pyx_t_16 = 0;
     goto __pyx_L0;
   }
 
@@ -3122,6 +3320,8 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
   __Pyx_XDECREF(__pyx_t_13);
   __Pyx_XDECREF(__pyx_t_14);
   __Pyx_XDECREF(__pyx_t_15);
+  __Pyx_XDECREF(__pyx_t_16);
+  __Pyx_XDECREF(__pyx_t_17);
   __Pyx_AddTraceback("parameters.Parameters.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
@@ -3134,7 +3334,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_2__reduce_cython__(struct __
 
 /* "(tree fragment)":16
  *     else:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, state)
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_Parameters__set_state(self, __pyx_state)
  */
@@ -3159,7 +3359,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_4__setstate_cython__(struct 
   __Pyx_RefNannySetupContext("__setstate_cython__", 0);
 
   /* "(tree fragment)":17
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, state)
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, state)
  * def __setstate_cython__(self, __pyx_state):
  *     __pyx_unpickle_Parameters__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
@@ -3170,7 +3370,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_4__setstate_cython__(struct 
 
   /* "(tree fragment)":16
  *     else:
- *         return __pyx_unpickle_Parameters, (type(self), 0x6693ff6, state)
+ *         return __pyx_unpickle_Parameters, (type(self), 0xc7fea38, state)
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_Parameters__set_state(self, __pyx_state)
  */
@@ -3188,7 +3388,7 @@ static PyObject *__pyx_pf_10parameters_10Parameters_4__setstate_cython__(struct 
   return __pyx_r;
 }
 
-/* "parameters.pyx":23
+/* "parameters.pyx":25
  * 
  * class Preferences:
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):             # <<<<<<<<<<<<<<
@@ -3240,35 +3440,35 @@ static PyObject *__pyx_pw_10parameters_11Preferences_1__init__(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_merging)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 1); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 1); __PYX_ERR(0, 25, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_splitlargedataset)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 2); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 2); __PYX_ERR(0, 25, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_modelgeneration)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 3); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 3); __PYX_ERR(0, 25, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_seed)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 4); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 4); __PYX_ERR(0, 25, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_unstuck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 5); __PYX_ERR(0, 23, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, 5); __PYX_ERR(0, 25, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 23, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 25, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -3281,15 +3481,15 @@ static PyObject *__pyx_pw_10parameters_11Preferences_1__init__(PyObject *__pyx_s
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
     __pyx_v_self = values[0];
-    __pyx_v_merging = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_merging == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_splitlargedataset = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_splitlargedataset == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
-    __pyx_v_modelgeneration = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_modelgeneration == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_merging = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_merging == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+    __pyx_v_splitlargedataset = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_splitlargedataset == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
+    __pyx_v_modelgeneration = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_modelgeneration == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
     __pyx_v_seed = values[4];
-    __pyx_v_unstuck = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_unstuck == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 23, __pyx_L3_error)
+    __pyx_v_unstuck = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_unstuck == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 25, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 23, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 25, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("parameters.Preferences.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3308,64 +3508,64 @@ static PyObject *__pyx_pf_10parameters_11Preferences___init__(CYTHON_UNUSED PyOb
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "parameters.pyx":24
+  /* "parameters.pyx":26
  * class Preferences:
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):
  *         self.merging = merging             # <<<<<<<<<<<<<<
  *         self.splitlargedataset = splitlargedataset
  *         self.modelgeneration=modelgeneration
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_merging); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_merging); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_merging, __pyx_t_1) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_merging, __pyx_t_1) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "parameters.pyx":25
+  /* "parameters.pyx":27
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):
  *         self.merging = merging
  *         self.splitlargedataset = splitlargedataset             # <<<<<<<<<<<<<<
  *         self.modelgeneration=modelgeneration
  *         self.seed=seed
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_splitlargedataset); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_splitlargedataset); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_splitlargedataset, __pyx_t_1) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_splitlargedataset, __pyx_t_1) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "parameters.pyx":26
+  /* "parameters.pyx":28
  *         self.merging = merging
  *         self.splitlargedataset = splitlargedataset
  *         self.modelgeneration=modelgeneration             # <<<<<<<<<<<<<<
  *         self.seed=seed
  *         self.unstuck=unstuck
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_modelgeneration); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_modelgeneration); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_modelgeneration, __pyx_t_1) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_modelgeneration, __pyx_t_1) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "parameters.pyx":27
+  /* "parameters.pyx":29
  *         self.splitlargedataset = splitlargedataset
  *         self.modelgeneration=modelgeneration
  *         self.seed=seed             # <<<<<<<<<<<<<<
  *         self.unstuck=unstuck
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_seed, __pyx_v_seed) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_seed, __pyx_v_seed) < 0) __PYX_ERR(0, 29, __pyx_L1_error)
 
-  /* "parameters.pyx":28
+  /* "parameters.pyx":30
  *         self.modelgeneration=modelgeneration
  *         self.seed=seed
  *         self.unstuck=unstuck             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_unstuck); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_unstuck); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_unstuck, __pyx_t_1) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_unstuck, __pyx_t_1) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "parameters.pyx":23
+  /* "parameters.pyx":25
  * 
  * class Preferences:
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):             # <<<<<<<<<<<<<<
@@ -3481,18 +3681,18 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
   /* "(tree fragment)":4
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
- *     if __pyx_checksum != 0x6693ff6:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0xc7fea38:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  */
-  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0x6693ff6) != 0);
+  __pyx_t_1 = ((__pyx_v___pyx_checksum != 0xc7fea38) != 0);
   if (__pyx_t_1) {
 
     /* "(tree fragment)":5
  *     cdef object __pyx_result
- *     if __pyx_checksum != 0x6693ff6:
+ *     if __pyx_checksum != 0xc7fea38:
  *         from pickle import PickleError as __pyx_PickleError             # <<<<<<<<<<<<<<
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  *     __pyx_result = Parameters.__new__(__pyx_type)
  */
     __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 5, __pyx_L1_error)
@@ -3511,15 +3711,15 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":6
- *     if __pyx_checksum != 0x6693ff6:
+ *     if __pyx_checksum != 0xc7fea38:
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)             # <<<<<<<<<<<<<<
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)             # <<<<<<<<<<<<<<
  *     __pyx_result = Parameters.__new__(__pyx_type)
  *     if __pyx_state is not None:
  */
     __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v___pyx_checksum); if (unlikely(!__pyx_t_2)) __PYX_ERR(1, 6, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0x66, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 6, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_Incompatible_checksums_s_vs_0xc7, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 6, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_INCREF(__pyx_v___pyx_PickleError);
@@ -3546,15 +3746,15 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
     /* "(tree fragment)":4
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
- *     if __pyx_checksum != 0x6693ff6:             # <<<<<<<<<<<<<<
+ *     if __pyx_checksum != 0xc7fea38:             # <<<<<<<<<<<<<<
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  */
   }
 
   /* "(tree fragment)":7
  *         from pickle import PickleError as __pyx_PickleError
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  *     __pyx_result = Parameters.__new__(__pyx_type)             # <<<<<<<<<<<<<<
  *     if __pyx_state is not None:
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
@@ -3580,7 +3780,7 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
   __pyx_t_3 = 0;
 
   /* "(tree fragment)":8
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  *     __pyx_result = Parameters.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
@@ -3603,7 +3803,7 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
     /* "(tree fragment)":8
- *         raise __pyx_PickleError("Incompatible checksums (%s vs 0x6693ff6 = (T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, splitlargedataset, unstuck))" % __pyx_checksum)
+ *         raise __pyx_PickleError("Incompatible checksums (%s vs 0xc7fea38 = (Ls, T, chunks, delta, dw, inputs, merging, modelgeneration, nod, nt, nu, ny, oldmodels, outputs, pwarx, splitlargedataset, unstuck))" % __pyx_checksum)
  *     __pyx_result = Parameters.__new__(__pyx_type)
  *     if __pyx_state is not None:             # <<<<<<<<<<<<<<
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
@@ -3616,7 +3816,7 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
  *     return __pyx_result             # <<<<<<<<<<<<<<
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_INCREF(__pyx_v___pyx_result);
@@ -3649,8 +3849,8 @@ static PyObject *__pyx_pf_10parameters___pyx_unpickle_Parameters(CYTHON_UNUSED P
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):
  */
 
 static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struct __pyx_obj_10parameters_Parameters *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
@@ -3671,9 +3871,9 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
   /* "(tree fragment)":12
  *     return __pyx_result
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]             # <<<<<<<<<<<<<<
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[15])
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]             # <<<<<<<<<<<<<<
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[17])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
@@ -3683,7 +3883,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v___pyx_result->T = __pyx_t_2;
+  __pyx_v___pyx_result->Ls = __pyx_t_2;
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
@@ -3692,12 +3892,21 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v___pyx_result->chunks = __pyx_t_2;
+  __pyx_v___pyx_result->T = __pyx_t_2;
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
   __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 2, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v___pyx_result->chunks = __pyx_t_2;
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 12, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3706,7 +3915,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 3, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 4, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3715,7 +3924,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 4, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 5, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3724,7 +3933,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 5, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 6, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3733,7 +3942,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 6, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 7, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3742,7 +3951,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 7, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 8, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3751,7 +3960,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 8, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 9, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = __pyx_PyFloat_AsDouble(__pyx_t_1); if (unlikely((__pyx_t_3 == (double)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3760,7 +3969,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 9, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 10, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3769,7 +3978,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 10, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 11, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3778,7 +3987,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 11, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 12, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (!(likely(PySet_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None)||(PyErr_Format(PyExc_TypeError, "Expected %.16s, got %.200s", "set", Py_TYPE(__pyx_t_1)->tp_name), 0))) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GIVEREF(__pyx_t_1);
@@ -3790,7 +3999,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 12, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 13, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3799,7 +4008,16 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 13, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 14, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v___pyx_result->pwarx = __pyx_t_2;
+  if (unlikely(__pyx_v___pyx_state == Py_None)) {
+    PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
+    __PYX_ERR(1, 12, __pyx_L1_error)
+  }
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 15, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3808,7 +4026,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
     PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
     __PYX_ERR(1, 12, __pyx_L1_error)
   }
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 14, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 16, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_t_1); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(1, 12, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -3816,16 +4034,16 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
 
   /* "(tree fragment)":13
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[15])
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[17])
  */
   if (unlikely(__pyx_v___pyx_state == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "object of type 'NoneType' has no len()");
     __PYX_ERR(1, 13, __pyx_L1_error)
   }
   __pyx_t_5 = PyTuple_GET_SIZE(__pyx_v___pyx_state); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(1, 13, __pyx_L1_error)
-  __pyx_t_6 = ((__pyx_t_5 > 15) != 0);
+  __pyx_t_6 = ((__pyx_t_5 > 17) != 0);
   if (__pyx_t_6) {
   } else {
     __pyx_t_4 = __pyx_t_6;
@@ -3838,9 +4056,9 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
   if (__pyx_t_4) {
 
     /* "(tree fragment)":14
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):
- *         __pyx_result.__dict__.update(__pyx_state[15])             # <<<<<<<<<<<<<<
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):
+ *         __pyx_result.__dict__.update(__pyx_state[17])             # <<<<<<<<<<<<<<
  */
     __pyx_t_8 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v___pyx_result), __pyx_n_s_dict); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
@@ -3851,7 +4069,7 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
       PyErr_SetString(PyExc_TypeError, "'NoneType' object is not subscriptable");
       __PYX_ERR(1, 14, __pyx_L1_error)
     }
-    __pyx_t_8 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 15, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 14, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetItemInt_Tuple(__pyx_v___pyx_state, 17, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_8)) __PYX_ERR(1, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __pyx_t_10 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_9))) {
@@ -3873,9 +4091,9 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
 
     /* "(tree fragment)":13
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
- *         __pyx_result.__dict__.update(__pyx_state[15])
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):             # <<<<<<<<<<<<<<
+ *         __pyx_result.__dict__.update(__pyx_state[17])
  */
   }
 
@@ -3883,8 +4101,8 @@ static PyObject *__pyx_f_10parameters___pyx_unpickle_Parameters__set_state(struc
  *         __pyx_unpickle_Parameters__set_state(<Parameters> __pyx_result, __pyx_state)
  *     return __pyx_result
  * cdef __pyx_unpickle_Parameters__set_state(Parameters __pyx_result, tuple __pyx_state):             # <<<<<<<<<<<<<<
- *     __pyx_result.T = __pyx_state[0]; __pyx_result.chunks = __pyx_state[1]; __pyx_result.delta = __pyx_state[2]; __pyx_result.dw = __pyx_state[3]; __pyx_result.inputs = __pyx_state[4]; __pyx_result.merging = __pyx_state[5]; __pyx_result.modelgeneration = __pyx_state[6]; __pyx_result.nod = __pyx_state[7]; __pyx_result.nt = __pyx_state[8]; __pyx_result.nu = __pyx_state[9]; __pyx_result.ny = __pyx_state[10]; __pyx_result.oldmodels = __pyx_state[11]; __pyx_result.outputs = __pyx_state[12]; __pyx_result.splitlargedataset = __pyx_state[13]; __pyx_result.unstuck = __pyx_state[14]
- *     if len(__pyx_state) > 15 and hasattr(__pyx_result, '__dict__'):
+ *     __pyx_result.Ls = __pyx_state[0]; __pyx_result.T = __pyx_state[1]; __pyx_result.chunks = __pyx_state[2]; __pyx_result.delta = __pyx_state[3]; __pyx_result.dw = __pyx_state[4]; __pyx_result.inputs = __pyx_state[5]; __pyx_result.merging = __pyx_state[6]; __pyx_result.modelgeneration = __pyx_state[7]; __pyx_result.nod = __pyx_state[8]; __pyx_result.nt = __pyx_state[9]; __pyx_result.nu = __pyx_state[10]; __pyx_result.ny = __pyx_state[11]; __pyx_result.oldmodels = __pyx_state[12]; __pyx_result.outputs = __pyx_state[13]; __pyx_result.pwarx = __pyx_state[14]; __pyx_result.splitlargedataset = __pyx_state[15]; __pyx_result.unstuck = __pyx_state[16]
+ *     if len(__pyx_state) > 17 and hasattr(__pyx_result, '__dict__'):
  */
 
   /* function exit code */
@@ -4045,6 +4263,34 @@ static int __pyx_setprop_10parameters_10Parameters_nod(PyObject *o, PyObject *v,
   }
 }
 
+static PyObject *__pyx_getprop_10parameters_10Parameters_pwarx(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_10parameters_10Parameters_5pwarx_1__get__(o);
+}
+
+static int __pyx_setprop_10parameters_10Parameters_pwarx(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_10parameters_10Parameters_5pwarx_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
+static PyObject *__pyx_getprop_10parameters_10Parameters_Ls(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_10parameters_10Parameters_2Ls_1__get__(o);
+}
+
+static int __pyx_setprop_10parameters_10Parameters_Ls(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+  if (v) {
+    return __pyx_pw_10parameters_10Parameters_2Ls_3__set__(o, v);
+  }
+  else {
+    PyErr_SetString(PyExc_NotImplementedError, "__del__");
+    return -1;
+  }
+}
+
 static PyObject *__pyx_getprop_10parameters_10Parameters_chunks(PyObject *o, CYTHON_UNUSED void *x) {
   return __pyx_pw_10parameters_10Parameters_6chunks_1__get__(o);
 }
@@ -4170,6 +4416,8 @@ static struct PyGetSetDef __pyx_getsets_10parameters_Parameters[] = {
   {(char *)"inputs", __pyx_getprop_10parameters_10Parameters_inputs, __pyx_setprop_10parameters_10Parameters_inputs, (char *)0, 0},
   {(char *)"outputs", __pyx_getprop_10parameters_10Parameters_outputs, __pyx_setprop_10parameters_10Parameters_outputs, (char *)0, 0},
   {(char *)"nod", __pyx_getprop_10parameters_10Parameters_nod, __pyx_setprop_10parameters_10Parameters_nod, (char *)0, 0},
+  {(char *)"pwarx", __pyx_getprop_10parameters_10Parameters_pwarx, __pyx_setprop_10parameters_10Parameters_pwarx, (char *)0, 0},
+  {(char *)"Ls", __pyx_getprop_10parameters_10Parameters_Ls, __pyx_setprop_10parameters_10Parameters_Ls, (char *)0, 0},
   {(char *)"chunks", __pyx_getprop_10parameters_10Parameters_chunks, __pyx_setprop_10parameters_10Parameters_chunks, (char *)0, 0},
   {(char *)"merging", __pyx_getprop_10parameters_10Parameters_merging, __pyx_setprop_10parameters_10Parameters_merging, (char *)0, 0},
   {(char *)"splitlargedataset", __pyx_getprop_10parameters_10Parameters_splitlargedataset, __pyx_setprop_10parameters_10Parameters_splitlargedataset, (char *)0, 0},
@@ -4285,7 +4533,8 @@ static struct PyModuleDef __pyx_moduledef = {
 #endif
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
-  {&__pyx_kp_s_Incompatible_checksums_s_vs_0x66, __pyx_k_Incompatible_checksums_s_vs_0x66, sizeof(__pyx_k_Incompatible_checksums_s_vs_0x66), 0, 0, 1, 0},
+  {&__pyx_kp_s_Incompatible_checksums_s_vs_0xc7, __pyx_k_Incompatible_checksums_s_vs_0xc7, sizeof(__pyx_k_Incompatible_checksums_s_vs_0xc7), 0, 0, 1, 0},
+  {&__pyx_n_s_Ls, __pyx_k_Ls, sizeof(__pyx_k_Ls), 0, 0, 1, 1},
   {&__pyx_n_s_Parameters, __pyx_k_Parameters, sizeof(__pyx_k_Parameters), 0, 0, 1, 1},
   {&__pyx_n_s_PickleError, __pyx_k_PickleError, sizeof(__pyx_k_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_Preferences, __pyx_k_Preferences, sizeof(__pyx_k_Preferences), 0, 0, 1, 1},
@@ -4317,6 +4566,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_parameters, __pyx_k_parameters, sizeof(__pyx_k_parameters), 0, 0, 1, 1},
   {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
   {&__pyx_n_s_prepare, __pyx_k_prepare, sizeof(__pyx_k_prepare), 0, 0, 1, 1},
+  {&__pyx_n_s_pwarx, __pyx_k_pwarx, sizeof(__pyx_k_pwarx), 0, 0, 1, 1},
   {&__pyx_kp_s_pythonfiles_parameters_pyx, __pyx_k_pythonfiles_parameters_pyx, sizeof(__pyx_k_pythonfiles_parameters_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
@@ -4347,17 +4597,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "parameters.pyx":23
+  /* "parameters.pyx":25
  * 
  * class Preferences:
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):             # <<<<<<<<<<<<<<
  *         self.merging = merging
  *         self.splitlargedataset = splitlargedataset
  */
-  __pyx_tuple_ = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_merging, __pyx_n_s_splitlargedataset, __pyx_n_s_modelgeneration, __pyx_n_s_seed, __pyx_n_s_unstuck); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_merging, __pyx_n_s_splitlargedataset, __pyx_n_s_modelgeneration, __pyx_n_s_seed, __pyx_n_s_unstuck); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
-  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pythonfiles_parameters_pyx, __pyx_n_s_init, 23, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pythonfiles_parameters_pyx, __pyx_n_s_init, 25, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) __PYX_ERR(0, 25, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Parameters(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
@@ -4377,7 +4627,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  __pyx_int_107560950 = PyInt_FromLong(107560950L); if (unlikely(!__pyx_int_107560950)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_209709624 = PyInt_FromLong(209709624L); if (unlikely(!__pyx_int_209709624)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4656,38 +4906,38 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "parameters.pyx":22
- *         self.nod=nod
+  /* "parameters.pyx":24
+ *         self.Ls=Ls
  * 
  * class Preferences:             # <<<<<<<<<<<<<<
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):
  *         self.merging = merging
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Preferences, __pyx_n_s_Preferences, (PyObject *) NULL, __pyx_n_s_parameters, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_Preferences, __pyx_n_s_Preferences, (PyObject *) NULL, __pyx_n_s_parameters, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "parameters.pyx":23
+  /* "parameters.pyx":25
  * 
  * class Preferences:
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):             # <<<<<<<<<<<<<<
  *         self.merging = merging
  *         self.splitlargedataset = splitlargedataset
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10parameters_11Preferences_1__init__, 0, __pyx_n_s_Preferences___init, NULL, __pyx_n_s_parameters, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_10parameters_11Preferences_1__init__, 0, __pyx_n_s_Preferences___init, NULL, __pyx_n_s_parameters, __pyx_d, ((PyObject *)__pyx_codeobj__2)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "parameters.pyx":22
- *         self.nod=nod
+  /* "parameters.pyx":24
+ *         self.Ls=Ls
  * 
  * class Preferences:             # <<<<<<<<<<<<<<
  *     def __init__(self,int merging,int splitlargedataset,int modelgeneration,seed,int unstuck):
  *         self.merging = merging
  */
-  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_Preferences, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Py3ClassCreate(((PyObject*)&__Pyx_DefaultClassType), __pyx_n_s_Preferences, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Preferences, __pyx_t_2) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_Preferences, __pyx_t_2) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -4704,7 +4954,7 @@ if (!__Pyx_RefNanny) {
   /* "parameters.pyx":1
  * cdef class Parameters:             # <<<<<<<<<<<<<<
  *     """Class that keeps track of user parameters"""
- *     cdef public int T, ny, nu, dw, inputs, outputs, nod
+ *     cdef public int T, ny, nu, dw, inputs, outputs, nod, pwarx, Ls
  */
   __pyx_t_1 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);

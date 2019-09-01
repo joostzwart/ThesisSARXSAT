@@ -28,11 +28,12 @@ def main(UserParameters,UserPreferences,**kwargs):
     cdef int NOD= UserParameters.nod                                                            #Number of datasets used.
     cdef int inputs=UserParameters.inputs                                                       #Number of inputs
     cdef int outputs=UserParameters.outputs                                                     #Number of outputs
-
+    cdef int pwarx=UserParameters.pwarx
+    cdef int Ls=UserParameters.Ls
     ## User choises
     cdef int seed=UserPreferences.seed                              #Seed of the randomness. 0: for a random seed
     cdef int modelgeneration=UserPreferences.modelgeneration        #Method of generating models. 1: use python to generate a model.
-    cdef int info=30                                                #Extend of Logging. DEBUG: No info. INFO: Process information. WARNING: Errors.
+    cdef int info=10                                                #Extend of Logging. DEBUG: No info. INFO: Process information. WARNING: Errors.
     cdef int Merging=UserPreferences.merging                        #Option to use more datasets. 0: for using one dataset. 1: for using more datasets
     cdef int SplitLargeDataset=UserPreferences.splitlargedataset    #Option used for large datasets.
     cdef int chunks=UserParameters.chunks                           #Number of chunks used in the dataset
@@ -40,14 +41,15 @@ def main(UserParameters,UserPreferences,**kwargs):
     cdef int unstuck = UserPreferences.unstuck                      #Method of dealing with the L0 minimization getting stuck
 
     ## Setting log level
-    logging.basicConfig(level=20)
+    logger=logging.getLogger('dev')
+    logger.setLevel(info)
     np.set_printoptions(formatter={'float': '{: 0.10f}'.format})
 
     ## typecasting
     cdef int m, i, status, N, j, k
     cdef double[:,:] y, r, u,
     cdef str satisfied
-    cdef list n, ds,certificate, cert, TotalSwitches, Nl, SigmaT, model_ident, modelfinal
+    cdef list n, ds,certificate, cert, TotalSwitches, Nl, SigmaT, model_ident, modelfinal, pwarx_certificate
     cdef list dsnew=[]
     cdef np.ndarray theta
 
@@ -67,7 +69,7 @@ def main(UserParameters,UserPreferences,**kwargs):
         if 'ProvidedDataset' in kwargs:
             ds=[kwargs.get("ProvidedDataset")]
         else:
-            logging.warning("no dataset provided. exiting program....")
+            logger.warning("no dataset provided. exiting program....")
             exit()
 
     # adding model parameters for calculating error
@@ -95,20 +97,20 @@ def main(UserParameters,UserPreferences,**kwargs):
 
     ## Keep track of feasible intervals
     cdef list dictionary=[]
-    T=T-ny
+    T=T-max(ny,nu)
 
     # Run solver till a feasible model is found
     for N in range(NOD):
         certificate=[]
 
         ## Generating initial switching seqence
-        (ds[N].switches,satisfied)= SAT.satisfying( ds[N].T, dw, ny, ds[N].certificate)
+        (ds[N].switches,satisfied)= SAT.satisfying( ds[N].T, dw, ny, ds[N].certificate, pwarx, ds[N].pwarx_certificate,Ls)
 
         ## Run the iterative identification process till a feasible model is found or this is impossible
         status=0
         while status!=1:
-            (cert,ds[N].model,ds[N].Nl,status,ds[N].dictionary)=TS.Theory(ds[N],
-            delta,T,ds[N].switches,ds[N].dictionary,ny,nu,inputs,outputs,oldmodels,unstuck)
+            (cert,ds[N].model,ds[N].Nl,status,ds[N].dictionary,pwarx_cert)=TS.Theory(ds[N],
+            delta,T,ds[N].switches,ds[N].dictionary,ny,nu,inputs,outputs,oldmodels,unstuck,pwarx)
             if status==1:
                 break
 
@@ -118,14 +120,19 @@ def main(UserParameters,UserPreferences,**kwargs):
                     ds[N].certificate.append(cert[i])
                 ds[N].certificate=SC.simplify(ds[N].certificate)
 
+            ## Add pwarx certificate
+            if pwarx_cert:
+                for i in range(len(pwarx_cert)):
+                    ds[N].pwarx_certificate.append(pwarx_cert[i])
+
             ## Add total switching sequence when no certificate is generated
             else:
                 certificate.append(ds[N].switches)
-            (ds[N].switches,satisfied)= SAT.satisfying( ds[N].T, dw, ny, ds[N].certificate)
+            (ds[N].switches,satisfied)= SAT.satisfying( ds[N].T, dw, ny, ds[N].certificate, pwarx, ds[N].pwarx_certificate,Ls)
 
             ## Sanity check whether a switching sequence was found
             if not ds[N].switches:
-                logging.warning("No Satisfying switching sequence found. Exiting program...")
+                logger.warning("No Satisfying switching sequence found. Exiting program...")
                 exit()
 
         ## Removing models not corresponding to an interval
@@ -141,7 +148,7 @@ def main(UserParameters,UserPreferences,**kwargs):
         ## Recover switching sequence
         ds[N].switches=[0]+ds[N].switches+[ds[N].T]
         ds[N].Sigma=[0]*(ds[N].T)
-        logging.debug("NL {}".format(ds[N].Nl))
+        logger.debug("NL {}".format(ds[N].Nl))
         for j in range(len(ds[N].Nl)):
             for k in ds[N].Nl[j]:
                 ds[N].Sigma[ds[N].switches[k]:ds[N].switches[k+1]]=[j+1]*(ds[N].switches[k+1]-ds[N].switches[k])
@@ -194,23 +201,23 @@ def main(UserParameters,UserPreferences,**kwargs):
     #    logging.info("B = {}".format(B))
 
     ## Print information about found model
-    logging.info("satisfied")
-    logging.debug("certificate {}".format(ds[N].certificate))
+    logger.info("satisfied")
+    logger.debug("certificate {}".format(ds[N].certificate))
     if modelgeneration==3:
-            logging.info("normalized error: {}".format(models.CalculateError(ds[N].modelfinal,theta,n,ds[N].Sigma,ny,nu)))
+            logger.info("normalized error: {}".format(models.CalculateError(ds[N].modelfinal,theta,n,ds[N].Sigma,ny,nu)))
 
     ## Print information in case of dataset split in chuncks
     if Merging==1:
-        logging.info("Switching sequence {}".format(ds[N].Sigma))
-        logging.info("Final Model after L1 minimization: {}".format(ds[N].modelfinal))
-        logging.info("Final interval separetion {}".format(ds[N].Nl))
-        logging.info("Switches present at {}".format(TotalSwitches))
+        logger.info("Switching sequence {}".format(ds[N].Sigma))
+        logger.info("Final Model after L1 minimization: {}".format(ds[N].modelfinal))
+        logger.info("Final interval separetion {}".format(ds[N].Nl))
+        logger.info("Switches present at {}".format(TotalSwitches))
 
     else:
-        logging.info("Relation between models and intervals = {}".format(ds[N].Nl))
-        logging.info("Identified switches {}".format(ds[N].switches))
-        logging.info("Identified models {}".format(ds[N].modelfinal))
-        logging.info("Identified switching sequence {}".format(ds[N].Sigma))
+        logger.info("Relation between models and intervals = {}".format(ds[N].Nl))
+        logger.info("Identified switches {}".format(ds[N].switches))
+        logger.info("Identified models {}".format(ds[N].modelfinal))
+        logger.info("Identified switching sequence {}".format(ds[N].Sigma))
 
     ## Writing information to a comma seperated text file for further analysis
     with open("DataSolved.txt", "wb") as f:

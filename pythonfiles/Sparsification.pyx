@@ -40,7 +40,7 @@ cpdef minimizeL1(regressor, int ny, int nu, double delta, output,
     prob.set_results_stream(None)
 
     ## defining parameters
-    cdef int NOP=(ny*outputs+nu*inputs)*outputs                                                              #number of parameters
+    cdef int NOP=(len(regressor[0][0]))*outputs                                                              #number of parameters
     cdef int NOPV=len(output)                                                                                #NOPV = number of parameter vectors
 
     ## defining cplex specific parameters
@@ -60,7 +60,7 @@ cpdef minimizeL1(regressor, int ny, int nu, double delta, output,
     
     cdef list my_rhs = [0.0]*NOP*2*NOPV+rhs2
     cdef int size=len(my_rhs)
-    cdef int rlen=(ny*outputs+nu*inputs)
+    cdef int rlen=len(regressor[0][0])
     cdef list my_rownames = ["c{0}".format(i) for i in range(1,size+1)]
     cdef list my_sense = ["L"] * size
 
@@ -272,6 +272,7 @@ cpdef weightedL1(regressor, int ny, int nu, double delta, output,
     cdef int NOPV=len(output)
     cdef list vari, z, pb
     cdef int status
+
     for _ in itertools.repeat(None, NOI): 
         (vari,status)=minimizeL1(regressor,ny,nu,delta,output,W,inputs,outputs)
         if status != 1:
@@ -279,7 +280,7 @@ cpdef weightedL1(regressor, int ny, int nu, double delta, output,
         
         ## Substract the important parameters and update the weights
         z=vari[0:NOPV]
-        model=vari[NOPV:NOPV+(ny*outputs+nu*inputs)*outputs]
+        model=vari[NOPV:NOPV+(len(regressor[0][0]))*outputs]
         W=[1/(x+regc) for x in z]
     return(model,status)
 
