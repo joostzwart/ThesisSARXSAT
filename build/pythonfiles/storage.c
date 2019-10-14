@@ -1223,6 +1223,7 @@ static const char __pyx_k_inputs[] = "inputs";
 static const char __pyx_k_models[] = "models";
 static const char __pyx_k_name_2[] = "__name__";
 static const char __pyx_k_select[] = "select";
+static const char __pyx_k_tables[] = "tables";
 static const char __pyx_k_BytesIO[] = "BytesIO";
 static const char __pyx_k_connect[] = "connect";
 static const char __pyx_k_execute[] = "execute";
@@ -1262,6 +1263,7 @@ static const char __pyx_k_CREATE_TABLE_modelinfo_id_INTEGE[] = "CREATE TABLE mod
 static const char __pyx_k_INSERT_INTO_Modelinfo_id_switchi[] = "INSERT INTO Modelinfo (id,switchingsequence,nu,ny,inputs,outputs,dw,delta) values (?,?,?,?,?,?,?,?)";
 static const char __pyx_k_INSERT_INTO_Models_models_modeli[] = "INSERT INTO Models (models,modelid) values (?,?)";
 static const char __pyx_k_INSERT_INTO_Runs_dataset_descrip[] = "INSERT INTO Runs (dataset,description,datafiterror,mse,time) values (?,?,?,?,?)";
+static const char __pyx_k_SELECT_name_FROM_sqlite_master_W[] = "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;";
 static PyObject *__pyx_kp_s_Action_is_not_recognized_Try_aga;
 static PyObject *__pyx_n_s_Binary;
 static PyObject *__pyx_n_s_BytesIO;
@@ -1280,6 +1282,7 @@ static PyObject *__pyx_kp_s_PRAGMA_foreign_keys_ON;
 static PyObject *__pyx_kp_s_SELECT_COUNT_FROM_RUNS;
 static PyObject *__pyx_kp_s_SELECT_FROM_Models;
 static PyObject *__pyx_kp_s_SELECT_FROM_Runs;
+static PyObject *__pyx_kp_s_SELECT_name_FROM_sqlite_master_W;
 static PyObject *__pyx_n_s_action;
 static PyObject *__pyx_n_s_adapt_array;
 static PyObject *__pyx_n_s_arr;
@@ -1339,6 +1342,7 @@ static PyObject *__pyx_n_s_selectmodel;
 static PyObject *__pyx_n_s_sqlite3;
 static PyObject *__pyx_n_s_storage;
 static PyObject *__pyx_n_s_switchingsequence;
+static PyObject *__pyx_n_s_tables;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_text;
 static PyObject *__pyx_n_s_time;
@@ -3464,7 +3468,7 @@ static PyObject *__pyx_pf_7storage_6action(CYTHON_UNUSED PyObject *__pyx_self, P
  *         data=cur.fetchall()
  *         print(data)             # <<<<<<<<<<<<<<
  * 
- *     else:
+ *     elif action=="tables":
  */
     if (__Pyx_PrintOne(0, __pyx_v_data) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
 
@@ -3478,7 +3482,89 @@ static PyObject *__pyx_pf_7storage_6action(CYTHON_UNUSED PyObject *__pyx_self, P
     goto __pyx_L11;
   }
 
-  /* "storage.pyx":108
+  /* "storage.pyx":107
+ *         print(data)
+ * 
+ *     elif action=="tables":             # <<<<<<<<<<<<<<
+ *         cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+ *         data=cur.fetchall()
+ */
+  __pyx_t_11 = (__Pyx_PyString_Equals(__pyx_v_action, __pyx_n_s_tables, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (__pyx_t_11) {
+
+    /* "storage.pyx":108
+ * 
+ *     elif action=="tables":
+ *         cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")             # <<<<<<<<<<<<<<
+ *         data=cur.fetchall()
+ *         print(data)
+ */
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_cur, __pyx_n_s_execute); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+      if (likely(__pyx_t_3)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+        __Pyx_INCREF(__pyx_t_3);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_1, function);
+      }
+    }
+    __pyx_t_7 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_1, __pyx_t_3, __pyx_kp_s_SELECT_name_FROM_sqlite_master_W) : __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_kp_s_SELECT_name_FROM_sqlite_master_W);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 108, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+    /* "storage.pyx":109
+ *     elif action=="tables":
+ *         cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+ *         data=cur.fetchall()             # <<<<<<<<<<<<<<
+ *         print(data)
+ * 
+ */
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_cur, __pyx_n_s_fetchall); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
+      __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+      if (likely(__pyx_t_3)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+        __Pyx_INCREF(__pyx_t_3);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_1, function);
+      }
+    }
+    __pyx_t_7 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
+    __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 109, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF_SET(__pyx_v_data, __pyx_t_7);
+    __pyx_t_7 = 0;
+
+    /* "storage.pyx":110
+ *         cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+ *         data=cur.fetchall()
+ *         print(data)             # <<<<<<<<<<<<<<
+ * 
+ *     else:
+ */
+    if (__Pyx_PrintOne(0, __pyx_v_data) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+
+    /* "storage.pyx":107
+ *         print(data)
+ * 
+ *     elif action=="tables":             # <<<<<<<<<<<<<<
+ *         cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+ *         data=cur.fetchall()
+ */
+    goto __pyx_L11;
+  }
+
+  /* "storage.pyx":113
  * 
  *     else:
  *         print("Action is not recognized. Try again")             # <<<<<<<<<<<<<<
@@ -3486,19 +3572,19 @@ static PyObject *__pyx_pf_7storage_6action(CYTHON_UNUSED PyObject *__pyx_self, P
  *     con.close()
  */
   /*else*/ {
-    if (__Pyx_PrintOne(0, __pyx_kp_s_Action_is_not_recognized_Try_aga) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
+    if (__Pyx_PrintOne(0, __pyx_kp_s_Action_is_not_recognized_Try_aga) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
   }
   __pyx_L11:;
 
-  /* "storage.pyx":109
+  /* "storage.pyx":114
  *     else:
  *         print("Action is not recognized. Try again")
  *     con.commit()             # <<<<<<<<<<<<<<
  *     con.close()
  *     return data
  */
-  if (unlikely(!__pyx_v_con)) { __Pyx_RaiseUnboundLocalError("con"); __PYX_ERR(0, 109, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_con, __pyx_n_s_commit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 109, __pyx_L1_error)
+  if (unlikely(!__pyx_v_con)) { __Pyx_RaiseUnboundLocalError("con"); __PYX_ERR(0, 114, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_con, __pyx_n_s_commit); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3512,19 +3598,19 @@ static PyObject *__pyx_pf_7storage_6action(CYTHON_UNUSED PyObject *__pyx_self, P
   }
   __pyx_t_7 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 109, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "storage.pyx":110
+  /* "storage.pyx":115
  *         print("Action is not recognized. Try again")
  *     con.commit()
  *     con.close()             # <<<<<<<<<<<<<<
  *     return data
  */
-  if (unlikely(!__pyx_v_con)) { __Pyx_RaiseUnboundLocalError("con"); __PYX_ERR(0, 110, __pyx_L1_error) }
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_con, __pyx_n_s_close); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (unlikely(!__pyx_v_con)) { __Pyx_RaiseUnboundLocalError("con"); __PYX_ERR(0, 115, __pyx_L1_error) }
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_con, __pyx_n_s_close); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
@@ -3538,12 +3624,12 @@ static PyObject *__pyx_pf_7storage_6action(CYTHON_UNUSED PyObject *__pyx_self, P
   }
   __pyx_t_7 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "storage.pyx":111
+  /* "storage.pyx":116
  *     con.commit()
  *     con.close()
  *     return data             # <<<<<<<<<<<<<<
@@ -3645,6 +3731,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_SELECT_COUNT_FROM_RUNS, __pyx_k_SELECT_COUNT_FROM_RUNS, sizeof(__pyx_k_SELECT_COUNT_FROM_RUNS), 0, 0, 1, 0},
   {&__pyx_kp_s_SELECT_FROM_Models, __pyx_k_SELECT_FROM_Models, sizeof(__pyx_k_SELECT_FROM_Models), 0, 0, 1, 0},
   {&__pyx_kp_s_SELECT_FROM_Runs, __pyx_k_SELECT_FROM_Runs, sizeof(__pyx_k_SELECT_FROM_Runs), 0, 0, 1, 0},
+  {&__pyx_kp_s_SELECT_name_FROM_sqlite_master_W, __pyx_k_SELECT_name_FROM_sqlite_master_W, sizeof(__pyx_k_SELECT_name_FROM_sqlite_master_W), 0, 0, 1, 0},
   {&__pyx_n_s_action, __pyx_k_action, sizeof(__pyx_k_action), 0, 0, 1, 1},
   {&__pyx_n_s_adapt_array, __pyx_k_adapt_array, sizeof(__pyx_k_adapt_array), 0, 0, 1, 1},
   {&__pyx_n_s_arr, __pyx_k_arr, sizeof(__pyx_k_arr), 0, 0, 1, 1},
@@ -3704,6 +3791,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_sqlite3, __pyx_k_sqlite3, sizeof(__pyx_k_sqlite3), 0, 0, 1, 1},
   {&__pyx_n_s_storage, __pyx_k_storage, sizeof(__pyx_k_storage), 0, 0, 1, 1},
   {&__pyx_n_s_switchingsequence, __pyx_k_switchingsequence, sizeof(__pyx_k_switchingsequence), 0, 0, 1, 1},
+  {&__pyx_n_s_tables, __pyx_k_tables, sizeof(__pyx_k_tables), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_text, __pyx_k_text, sizeof(__pyx_k_text), 0, 0, 1, 1},
   {&__pyx_n_s_time, __pyx_k_time, sizeof(__pyx_k_time), 0, 0, 1, 1},

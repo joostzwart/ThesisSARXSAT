@@ -81,7 +81,10 @@ cpdef Theory(dataset, double delta, int NOPV, list switches, list dictionary, in
     #  determine whether the datapoints from adjecent intervals are linearly seperable
     if pwarx==1:
         for i in range(count-1):
-            status=checkPoints.intersect(1000*b[i],1000*b[i+1],delta)
+            try:
+                status=checkPoints.intersect(10000*b[i],10000*b[i+1],delta)
+            except:
+                status=1
             feasible.append(status)
 
             ## Add certificate when a switch is not correct

@@ -100,6 +100,7 @@ cpdef satisfying(int Td, int dwell, int ny, list certificate, int pwarx, list pw
         ny {integer} -- [Order of the output]
         certificate {list} -- [List of certificates]
         pwarx {int} -- 1 for PWARX, 0 for SARX
+        Ls {int} -- switching limit
     """
 
     ##typecasting
@@ -116,12 +117,12 @@ cpdef satisfying(int Td, int dwell, int ny, list certificate, int pwarx, list pw
         for i in range(Td):
             b.append(Bool('b{}'.format(i)))
             for j in range(Ls):
-                a[i].append(Bool('a{}{}'.format(i,j)))
+                a[i].append(Bool('a{}-{}'.format(i,j)))
 
     s = Solver()
 
     if pwarx!=1:
-        ## Adding Dwell time constraint
+    ## Adding Dwell time constraint
         for k in range(0,len(b)):
             if (k+dwell-1<len(b)):
                 s.add(Or(Not(b[k]),And([Not(b[k+i]) for i in range(1,dwell)])))
@@ -145,14 +146,15 @@ cpdef satisfying(int Td, int dwell, int ny, list certificate, int pwarx, list pw
         ## Adding switching limit constraint
         #constraint for first variable
         s.add(Or(Not(b[0]),a[0][0]))
-        for i in range(1,Ls):
-            s.add(Not(a[0][i]))
+        #for i in range(1,Ls): ????
+        #    s.add(Not(a[0][i]))
 
         # constraint that enforces that at least as much booleans are true in the sequence
         # for the next one as the previous one
-        for i in range(1,Td):
-            for j in range(1,Ls):
-                s.add(Or(Not(a[i-1][j]),a[i][j]))
+        for i in range(Td-1):
+            for j in range(Ls):
+                s.add(Or(Not(a[i][j]),a[i+1][j]))
+
         # add one to counter
         for i in range(1,Td):
             for j in range(1,Ls):
@@ -163,101 +165,20 @@ cpdef satisfying(int Td, int dwell, int ny, list certificate, int pwarx, list pw
             s.add(Or(Not(a[i][Ls-1]),Not(b[i+1])))
 
         ## First row constraint
-        for i in range(1,Td):
+        for i in range(Td):
             s.add(Or(Not(b[i]),a[i][0]))
-            s.add(Or(Not(a[i-1][0]),a[i][0]))
 
     ##Translating SAT problem to index   
     cdef str satisfied=str(s.check())
     cdef list index=[]
     cdef str bool
+
     if satisfied=="sat":
         sol=s.model()
         for id in sol.decls():
             if is_true(sol[id]):
                 bool=str(id)
                 if bool[0]=='b':
-                    index.append(int(bool[1:]))
-    else:
-        print("UNSATISFIED")
-    return(index,satisfied)
-
-cpdef satisfying_limit_switching(int Td, int Ls, int ny, list certificate, list pwarx_certificate):
-    """This function handles the Boolean logic and proposes a switching sequence
-    
-    Arguments:
-        Td {integer} -- [Length of dataset]
-        dwell {integer} -- [Specified dwell time]
-        ny {integer} -- [Order of the output]
-        certificate {list} -- [List of certificates]
-        pwarx {int} -- 1 for PWARX, 0 for SARX
-    """
-    ##typecasting
-    cdef int i, j, k, val
-    ## Creating Booleans
-    cdef list b=[]
-    cdef list a=[]
-    for j in range(Td):
-        a.append([])
-    for i in range(Td):
-        b.append(Bool('b{}'.format(i)))
-        for j in range(Ls):
-            a[i].append(Bool('a{}{}'.format(i,j)))
-
-
-    cdef int T=len(b)
-    s = Solver()
-
-
-    ## Adding switching limit constraint
-    #constraint for first variable
-    s.add(Or(Not(b[0]),a[0][0]))
-    for i in range(1,Ls):
-        s.add(Not(a[0][i]))
-
-    # constraint that enforces that at least as much booleans are true in the sequence
-    # for the next one as the previous one
-    for i in range(1,Td):
-        for j in range(1,Ls):
-            s.add(Or(Not(a[i-1][j]),a[i][j]))
-    # add one to counter
-    for i in range(1,Td):
-        for j in range(1,Ls):
-            s.add(Or(Not(And(b[i],a[i-1][j-1])),a[i][j]))
-
-    #when count is reached set rest to zero
-    for i in range(Td-1):
-        s.add(Or(Not(a[i][Ls-1]),Not(b[i+1])))
-
-    ## First row constraint
-    for i in range(1,Td):
-        s.add(Or(Not(b[i]),a[i][0]))
-        s.add(Or(Not(a[i-1][0]),a[i][0]))
-
-    ## adding certificate to prune the searchspace
-    for j in range(len(certificate)):
-        if len(certificate[j])==1:
-            certificate[j]=[0]+certificate[j]
-        ix=range(certificate[j][0]+1,certificate[j][1])
-        s.add([Or([b[val] for val in ix])])
-
-    ## add certificates for PWARX
-    for j in range(len(pwarx_certificate)):
-        ix=list(range(pwarx_certificate[j][0]+1,pwarx_certificate[j][1]))
-        ix2=list(range(pwarx_certificate[j][1]+1,pwarx_certificate[j][2]))
-        s.add(Or([b[val] for val in ix]+[Not(b[pwarx_certificate[j][1]])] + [b[val] for val in ix2]))
-
-    ##Translating SAT problem to index
-    cdef str satisfied=str(s.check())
-    cdef list index=[]
-    cdef str bool
-    if satisfied=="sat":
-        sol=s.model()
-        for id in sol.decls():
-            if is_true(sol[id]):
-                bool=str(id)
-                if bool[0]=='b':
-                    print(bool)
                     index.append(int(bool[1:]))
     else:
         print("UNSATISFIED")

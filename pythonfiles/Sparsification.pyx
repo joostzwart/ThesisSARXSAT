@@ -170,8 +170,6 @@ cpdef L1(list regressor, int ny, int nu, double delta, list output, int NOI,
             weights=[1]*len(y)
         else:
             weights=[random.random() for i in range(len(y))]
-            #weights=[100]+[1]*(len(y)-1)
-            #weights=list(np.random.choise(len(y)))
 
         ## Find the next model
         if stuck==0:

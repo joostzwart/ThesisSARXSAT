@@ -2,6 +2,7 @@ from sklearn import svm
 import numpy as np
 cimport numpy as np
 import matplotlib.pyplot as plt
+import math
 
 
 cpdef mesh(np.ndarray X):
@@ -20,25 +21,16 @@ def heightmap(xx,yy,H,int modes):
     return(Z)
 
 cpdef constructH(H,int modes):
-    Ht=[]
-    cdef int i
-    cdef int count1=0
-    cdef int count2=1
-    cdef int count3=1
+
+    Hs = []
     for i in range(modes):
-        Ht.append(np.empty((0,len(H[0])),dtype=float))
-
-
-    for i in range(len(H[:,0])):
-        Ht[count1]=np.append(Ht[count1],np.expand_dims(H[i,:],axis=0), axis=0)
-        Ht[count2]=np.append(Ht[count2],np.expand_dims(-H[i, :],axis=0),axis=0)
-        if count2<modes-1:
-            count2=count2+1
-        else:
-            count1=count1+1
-            count2=count3+1
-            count3=count3+1
-    return Ht
+        Hs.append(np.empty((0,len(H[0]))))
+    for j in range(modes):
+        for i in range(modes):
+            if j != i:
+                Hi = H[j] - H[i]
+                Hs[j]=np.vstack((Hs[j],Hi))
+    return Hs
 
 def createLabels(Y):
     L=[]
@@ -47,32 +39,32 @@ def createLabels(Y):
     return L
 def partition(X,Y,modes):
     ## check to determine the number of modes is larger than 1
-    if max(Y)==1:
+    if modes==1:
         return []
     X=X[:,:-1]
-    Hs = {}
-    ys = {}
+
+    ##Initialize weights
+    Yw=np.array(Y)
+    for i in range(max(Y)+1):
+        w1=(Yw == i).sum()
+        w2=float(w1)
+        weight={i: len(Y)/math.sqrt(math.sqrt(w2))}
     ## Initialize a SVM
-    clf = svm.SVC(kernel ='linear', C = 1)
+    clf = svm.LinearSVC(max_iter = 10000)
     clf.fit(X,Y)
 
-
-    H = np.hstack((np.array(clf.coef_),np.transpose(np.array([clf.intercept_]))))
     ## Construct proper H
-    H2 = constructH(H, modes)
+    H = np.hstack((np.array(clf.coef_),np.transpose(np.array([clf.intercept_]))))
+    if modes==2:
+        H=[H[0],-H[0]]
 
+    H2 = constructH(H, modes)
     ## Plot contour map
     if len(X[0, :]) == 2:
         xx, yy = mesh(X)
         Z = heightmap(xx, yy, H2, modes)
+        plt.figure(1)
         plt.contourf(xx, yy, Z, alpha=0.6, cmap='gist_rainbow')
-
-        ## Plot lines
-        x=np.linspace(X[:,0].min()-1,X[:,0].max()+1,1000)
-        for i in range(len(H)):
-            ys[i]= -H[i,0] / H[i,1] * x - H[i,2] / H[i,1]
-            plt.plot(x, ys[i], color='green')
-        L=createLabels(Y)
         plt.scatter(X[:, 0], X[:, 1], c=Y,s=50, cmap='plasma')
         ax=plt.gca()
         ax.set_xlim([X[:,0].min()-1, X[:,0].max()+0.9])

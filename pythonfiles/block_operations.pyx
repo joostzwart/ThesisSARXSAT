@@ -3,7 +3,9 @@ cimport numpy as np
 import logging
 import models
 import SAT
+import QuadProg as QP
 import LinProg as LP
+
 
 cpdef merge_blocks(Run, int blocks):
     """ 
@@ -187,7 +189,11 @@ cpdef hitting_set_model_reduction(self,Console,np.ndarray input, np.ndarray outp
 
     ## Identify models one final time
     for i in range(len(y3)):
-        (m3x,status)=LP.populatebyrow(y3[i],r3[i],delta,ny,nu,inputs,outputs,True)
+        (m3x,status)=QP.populatebyrow(y3[i],r3[i],delta,ny,nu,inputs,outputs)
+        if not m3x:
+            (m3x,status)=LP.populatebyrow(y3[i],r3[i],delta,ny,nu,inputs,outputs,True)
+        if not m3x:
+            m3x=Fmodels[i]
         m3.append(m3x)
     cdef list sigma3=sigma(swt,min_mod)
     cdef list sigma4=[0]*len(sigma3)
@@ -199,7 +205,7 @@ cpdef hitting_set_model_reduction(self,Console,np.ndarray input, np.ndarray outp
     logger.info("Final Models: {}".format(m3))
     if modelgeneration==3:
         mse=models.CalculateError(m3,theta,n,[x+1 for x in sigma4],ny,nu)
-        logger.info("MSE = {}".format(mse))
+        logger.info("Parameter error = {}".format(mse))
     datafiterror=models.CalculateDatafitError(m3,[x+1 for x in sigma4],output,r,outputs)
     logger.info("Data fit error = {}".format(datafiterror))
     if gui:

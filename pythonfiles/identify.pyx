@@ -46,7 +46,7 @@ def main(self,gui,**kwargs):
     pwarx=0
     inputfile = "Data/DatasetInput_Ts_20(J).txt"
     outputfile = "Data/Datasetoutput_Ts_20(J).txt"
-
+    inputtype = 1
     ## Converting kwargs to locals
     if 'ny' in kwargs:
         ny=kwargs['ny']
@@ -82,7 +82,8 @@ def main(self,gui,**kwargs):
         inputfile = kwargs['inputfile']
     if 'Ls' in kwargs:
         Ls = kwargs['Ls']
-
+    if 'inputtype' in kwargs:
+        inputtype = kwargs['inputtype']
 
 
     ## Parameters
@@ -119,7 +120,8 @@ def main(self,gui,**kwargs):
     if modelgeneration==2 or modelgeneration == 3:
         ## Simulate data to the file and read it again (seems superfluous but
         # necessary feature for importing textfiles in a later stadium)
-        (theta,n,H)=DataGenerator.generate(T,ny,nu,inputs,outputs,nt,modes,dw,seed,pwarx)
+        (theta,n,H)=DataGenerator.generate(T,ny,nu,inputs,outputs,nt,modes,dw,seed,pwarx,inputtype)
+        baseLogger.info("Hyperplanes used: {}".format(H))
         (input, output, inputs, outputs, T, r)=ReaderData.Read(nu,ny,modelgeneration,input=inputfile,output=outputfile)
 
         ## extend regressor in case of pwarx
@@ -129,15 +131,16 @@ def main(self,gui,**kwargs):
             r=extendedregressor
 
         ## plot input and output when using gui
-        if not __name__ == '__main__' and gui:
+        if not __name__ == '__main__' and gui and modelgeneration==3:
+            self.ax.clear()
             self.ax.plot(output[0], 'r-')
-            self.ax.plot(input[0], 'b-')
-            self.ax.legend(['Output', 'Input'])
+            self.ax.plot(input[0][max(ny,nu):], 'b-')
+            self.ax.legend(['Output', 'Input'])#
 
             for i in range(1,len(output)):
                 self.ax.plot(output[i], 'r-')
             for i in range(1,len(input)):
-                self.ax.plot(input[i],'b-')
+                self.ax.plot(input[i][max(ny,nu):],'b-')
             self.plotOutput.draw()
 
         ## Create preference object
@@ -170,7 +173,7 @@ def main(self,gui,**kwargs):
             if gui:
                 block_operations.updateLog(self,Console)
 
-        ## Retrieve final switching sequence
+        ## Retrieve final dataset
         Yt=np.hstack(([Y[i] for i in range(blocks)]))
         Ut=np.hstack(([U[i] for i in range(blocks)]))
         Rt=np.vstack(([R[i] for i in range(blocks)]))
@@ -190,6 +193,7 @@ def main(self,gui,**kwargs):
         ## plot switching sequence in case of using the gui
         if not __name__ == '__main__' and gui:
             cm = plt.cm.get_cmap('tab20')
+            self.ax_switching.clear()
             scatterplot=self.ax_switching.scatter(np.array(list(range(1,len(sigmat)+1))),sigmat,c=sigmat,s=200,marker='x')
             legend1=self.ax_switching.legend(*scatterplot.legend_elements(),
                     loc="upper right", title="Modes")
@@ -198,12 +202,14 @@ def main(self,gui,**kwargs):
             self.ax_switching.set_xlabel('[k]')
             self.ax_switching.set_ylabel('mode')
             self.plot_switching.draw()
+
         ## in case of a PWARX model, partition the regressorspace
         if pwarx==1:
             Ht=partition.partition(Rt,sigmat,max(sigmat)+1)
+            baseLogger.info("Coefficients of separating hyperplanes: {}".format(Ht))
         else:
             Ht=[]
         export.exportToMatlab(Fmodels,sigmat,Ut,Yt,Rt,Ht,pwarx)
-        return(n,sigmat,error,mse)
+        return(n,sigmat,error,mse,t2-t1,Fmodels)
 if __name__ == '__main__':
     main([])

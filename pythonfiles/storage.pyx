@@ -104,6 +104,11 @@ def action(action):
         data=cur.fetchall()
         print(data)
 
+    elif action=="tables":
+        cur.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;")
+        data=cur.fetchall()
+        print(data)
+
     else:
         print("Action is not recognized. Try again")
     con.commit()

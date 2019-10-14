@@ -222,7 +222,7 @@ class App(QMainWindow):
         self.modelsLeft.addWidget(self.panelgeneral, 2)
         self.modelsLeft.addWidget(self.panelsarx, 1)
         self.modelsLeft.addWidget(self.panelpwarx, 1)
-        self.modelsLeft.addWidget(self.panelsimulate,3)
+        self.modelsLeft.addWidget(self.panelsimulate,4)
         self.modelsLeft.addWidget(self.bottomLeft,2)
         self.panelpwarx.setAutoFillBackground(True)
         self.pal = self.bottomLeft.palette()
@@ -325,6 +325,8 @@ class App(QMainWindow):
         self.splitsimulate.addWidget(self.labelNumberOfOutputs,5,0)
         self.labelSeed = QLabel("Seed for randomness. 0 for a random seed")
         self.splitsimulate.addWidget(self.labelSeed,6,0)
+        self.labelinputtype = QLabel("Type of input: ")
+        self.splitsimulate.addWidget(self.labelinputtype,7,0)
 
         # length of dataset
         self.LengthDataset = QSpinBox()
@@ -334,7 +336,7 @@ class App(QMainWindow):
 
         # number of models
         self.numberOfModels = QSpinBox()
-        self.numberOfModels.setRange(1, 20)
+        self.numberOfModels.setRange(2, 20)
         self.splitsimulate.addWidget(self.numberOfModels,2,1)
 
         # noise
@@ -361,6 +363,12 @@ class App(QMainWindow):
         self.splitsimulate.addWidget(self.seed,6,1)
         self.checkGenerateModels.toggled.connect(self.on_check_generate_models)
 
+        # input type
+        self.inputtype=QComboBox()
+        self.inputtype.addItem('Uniformly distributed input')
+        self.inputtype.addItem('Sine wave')
+        self.splitsimulate.addWidget(self.inputtype, 7, 1)
+
         # hide objects from start
         self.blocks.hide()
         self.numberOfModels.hide()
@@ -378,6 +386,8 @@ class App(QMainWindow):
         self.seed.hide()
         self.Ls.hide()
         self.labelLs.hide()
+        self.labelinputtype.hide()
+        self.inputtype.hide()
 
         ## SARX
         self.splitsarx = QGridLayout()
@@ -437,6 +447,11 @@ class App(QMainWindow):
         nt=float(self.noise.text())
         models=int(self.numberOfModels.text())
         T=int(self.LengthDataset.text())
+        varinputtype=1
+        if self.inputtype.currentText()=='Sine wave':
+            varinputtype=2
+
+
         if self.checkGenerateModels.isChecked():
             seed=int(self.seed.text())
         else:
@@ -445,10 +460,9 @@ class App(QMainWindow):
         modelgeneration=2+int(self.checkGenerateModels.isChecked())
         #QMessageBox.question(self, 'Parameters', "Number of inputs: " + NOI + ", dwelltime = " + dw, QMessageBox.Ok,
         #                     QMessageBox.Ok)
-        print(modelgeneration)
         if self.checkGenerateModels.isChecked():
             identify.main(self,True,nu=nu,ny=ny,dw=dw,seed=seed,pwarx=pwarx,delta=delta,split=split,blocks=blocks,inputs=inputs,outputs=outputs,
-                      nt=nt,models=models,T=T,modelgeneration=modelgeneration,Ls=Ls)
+                      nt=nt,models=models,T=T,modelgeneration=modelgeneration,Ls=Ls,inputtype=varinputtype)
         else:
             identify.main(self,True,nu=nu,ny=ny,dw=dw,seed=seed,pwarx=pwarx,delta=delta,split=split,blocks=blocks,modelgeneration=modelgeneration,inputfile=self.input_file,outputfile=self.output_file,Ls=Ls)
 
@@ -506,6 +520,8 @@ class App(QMainWindow):
             self.LengthDataset.show()
             self.labelSeed.show()
             self.seed.show()
+            self.labelinputtype.show()
+            self.inputtype.show()
         else:
             self.numberOfModels.hide()
             self.labelNumberOfModels.hide()
@@ -519,6 +535,8 @@ class App(QMainWindow):
             self.LengthDataset.hide()
             self.labelSeed.hide()
             self.seed.hide()
+            self.inputtype.hide()
+            self.labelinputtype.hide()
 
     @pyqtSlot()
     def on_check_own_dataset(self):

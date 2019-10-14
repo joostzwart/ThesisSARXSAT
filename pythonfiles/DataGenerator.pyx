@@ -2,7 +2,7 @@ import numpy as np
 cimport numpy as np
 import random
 
-cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,int dw,seed,int pwarx):
+cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,int dw,seed,int pwarx,int inputtype):
     """Generate random SARX/PWARX datasets
 
     Arguments:
@@ -30,7 +30,7 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
 
     ## generate the parameter vectors
     cdef np.ndarray thetaY=(2.0/ny*outputs)*(np.random.rand(modes,outputs,ny*outputs)-0.5)
-    cdef np.ndarray thetaU=0.5*np.random.rand(modes,outputs,nu*inputs)-1
+    cdef np.ndarray thetaU=4*np.random.rand(modes,outputs,nu*inputs)-2
     cdef np.ndarray thetaR
     cdef np.ndarray thetaAffine = np.random.rand(modes, outputs, 1)
     cdef list u = []
@@ -46,10 +46,11 @@ cpdef generate(int T,int ny,int nu,int inputs,int outputs,double nt,int modes,in
     H={}
     ## Generating uniformly distributed random input
     for i in range(inputs):
-        [u_i] = (5 * np.random.rand(1, T) - 2.5)
-        #[u_i] = np.random.normal(0,0.4,(1,T))
-        time=np.arange(0, T, 1)
-        u_i=np.sin(0.1*time)
+        if inputtype==2:
+            time=np.arange(0, T, 1)
+            u_i=(5*random.random()-2.5)*np.sin(0.5*random.random()*time)
+        else:
+            [u_i] = (5 * np.random.rand(1, T) - 2.5)
         u.append(u_i)
 
     ## Generating uniformly distributed random y0
