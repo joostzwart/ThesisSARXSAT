@@ -1,6 +1,6 @@
 # HySI-SAT 
 Tool for identifying switched ARX and Piecewise ARX systems. Use at your own risk.
-This tool was created as part of the thesis project at the TU Delft.
+This tool was created as part of a thesis project at the TU Delft.
 author: Joost Zwart
 
 # Install instructions
