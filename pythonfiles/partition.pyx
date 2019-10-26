@@ -30,6 +30,7 @@ cpdef constructH(H,int modes):
             if j != i:
                 Hi = H[j] - H[i]
                 Hs[j]=np.vstack((Hs[j],Hi))
+        Hs[j]=-Hs[j]
     return Hs
 
 def createLabels(Y):

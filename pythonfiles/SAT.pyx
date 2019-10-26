@@ -146,8 +146,6 @@ cpdef satisfying(int Td, int dwell, int ny, list certificate, int pwarx, list pw
         ## Adding switching limit constraint
         #constraint for first variable
         s.add(Or(Not(b[0]),a[0][0]))
-        #for i in range(1,Ls): ????
-        #    s.add(Not(a[0][i]))
 
         # constraint that enforces that at least as much booleans are true in the sequence
         # for the next one as the previous one

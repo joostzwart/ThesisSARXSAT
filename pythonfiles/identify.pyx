@@ -108,8 +108,6 @@ def main(self,gui,**kwargs):
     strio = StringIO()
     Console = logging.StreamHandler(strio)
     baseLogger.addHandler(Console)
-    #logger2=logging.getLogger('mainlogger')
-    #logger2.setLevel(10)
     t1=time.time()
     if modelgeneration==1:
         ## Create preference object

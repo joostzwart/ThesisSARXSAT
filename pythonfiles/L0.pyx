@@ -194,11 +194,6 @@ def main(UserParameters,UserPreferences,**kwargs):
         ## Recover Switching sequence
         ds[N].Sigma=models.RecoverMergedSwitching(TotalSwitches,ds[N].Nl)
 
-    ## Printing found parameters
-    #if inputs>1 or outputs>1:
-    #    (A,B)= models.recoverParameters(ds[N].modelfinal, nu, ny, inputs, outputs)
-    #    logging.info("A = {}".format(A))
-    #    logging.info("B = {}".format(B))
 
     ## Print information about found model
     logger.info("satisfied")
