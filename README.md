@@ -14,7 +14,7 @@ Run the following command to use the GUI:
 >python3 gui.py
 
 Run the following command after adding new code:
->python3 python3 setup_cython.py build_ext --inplace
+>python3 setup_cython.py build_ext --inplace
 
 # Dependencies
  * numpy
