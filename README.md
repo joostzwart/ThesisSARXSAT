@@ -24,8 +24,7 @@ Run the following command after adding new code:
  * Cplex (A license is required. )
  * Parma polyhedra library
  * pysqlite
- * sklean
- * scikit-learn
+ * sklearn
  
  # References
  The method used in this toolbox is based on the work of Ozay, Sznaier and Lagoa:
