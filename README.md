@@ -17,10 +17,10 @@ Run the following command after adding new code:
 >python3 python3 setup_cython.py build_ext --inplace
 
 # Dependencies
- * Numpy
- * Matplotlib
- * Pyqt5
- * Z3solve
+ * numpy
+ * matplotlib
+ * pyqt5
+ * z3
  * Cplex (A license is required. )
  * Parma polyhedra library
  * pysqlite
