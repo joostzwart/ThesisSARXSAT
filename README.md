@@ -21,7 +21,8 @@ Run the following command after adding new code:
  * matplotlib
  * pyqt5
  * z3-solver
- * Cplex (A license is required. )
+ * Cplex (A license is required.)
+ * cython
  * Parma polyhedra library
  * pysqlite
  * sklearn
