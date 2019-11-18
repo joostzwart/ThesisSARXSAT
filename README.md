@@ -20,7 +20,7 @@ Run the following command after adding new code:
  * numpy
  * matplotlib
  * pyqt5
- * z3
+ * z3-solver
  * Cplex (A license is required. )
  * Parma polyhedra library
  * pysqlite
